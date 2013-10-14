@@ -2,13 +2,12 @@ import random
 import datetime
 
 def swap(lst, i, j):
-    temp = lst[i]
-    lst[i] = lst[j]
-    lst[j] = temp
+    lst[i] , last[j] = lst[j] , lst[i]
 
 def randomize(lst):
     for index in range(len(lst)):
-        swap(lst, random.randint(0, len(lst) - 1), random.randint(0, len(lst) - 1))
+        swap(lst, random.randint(0, len(lst) - 1),
+            random.randint(0, len(lst) - 1))
 
 def bogoSort(lst):
     print(lst)
