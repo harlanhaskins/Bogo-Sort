@@ -2,7 +2,7 @@ import random
 import datetime
 
 def swap(lst, i, j):
-    lst[i] , last[j] = lst[j] , lst[i]
+    lst[i] , lst[j] = lst[j] , lst[i]
 
 def randomize(lst):
     for index in range(len(lst)):
