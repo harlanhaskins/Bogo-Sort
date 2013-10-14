@@ -11,11 +11,10 @@ def randomize(lst):
         swap(lst, random.randint(0, len(lst) - 1), random.randint(0, len(lst) - 1))
 
 def bogoSort(lst):
+    print(lst)
     ticks = datetime.datetime.now()
     totalIterations = 0
     while (not isSorted(lst)):
-        #if totalIterations % (400 * len(lst)) == 0:
-        print(lst)
         randomize(lst)
         totalIterations += 1
     endTicks = datetime.datetime.now()
