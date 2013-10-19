@@ -18,3 +18,12 @@ Usage
 And follow the prompts.
 
 BogoSort will generate a list of the length you specify and sort it. Intelligently.
+
+Sample Output
+======
+
+    How many items would you like in your list? 8
+    [66, 41, 47, 35, 10, 13, 13, 46]
+    [10, 13, 13, 35, 41, 46, 47, 66]
+    It took me 0:00:00.126353 to sort this list.
+    I shuffled it 2,479 times.
