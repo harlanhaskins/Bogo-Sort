@@ -50,7 +50,7 @@ void printArray(int* array, int length) {
 int* randomArrayOfLength(int length) {
     int *array = malloc(length * sizeof(int));
     for(int i = 0; i < length; i++) {
-        array[i] = arc4random_uniform(i * 3);
+        array[i] = arc4random_uniform(length * 3);
     }
     return array;
 }
