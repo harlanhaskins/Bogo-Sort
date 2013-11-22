@@ -120,8 +120,8 @@ int bogoSort(int* array, size_t length) {
 char* formattedTimeFromDouble(double time) {
     // Set some constants to use to calculate the number of hours,
     // minutes, etc.
-    const int SECONDS_PER_HOUR = 3600;
     const int SECONDS_PER_MINUTE = 60;
+    const int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60;
     
     // Get the number of hours in the elapsed time by dividing by
     // SECONDS_PER_HOUR and rounding down.
@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     printf("How many items would you like in your list? ");
     
     // Scan user input and fill the buffer we declared.
-    scanf("%zd", &numberOfItemsInList);
+    scanf("%zu", &numberOfItemsInList);
 
     // Grab an array of random items.
     int* array = randomArrayOfLength(numberOfItemsInList); 
