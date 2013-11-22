@@ -1,7 +1,7 @@
 // For printf() and sprintf().
 #include <stdio.h>
 
-// For arc4random_uniform()
+// For srandom and random
 #include <stdlib.h>
 
 // For clock() and the clock_t type.
@@ -33,7 +33,7 @@ bool isSorted(int* array, size_t length, bool ascending) {
     for (size_t i = 1; i < length; i++) {
         // If at any point the previous array item is greater than (or
         // less than, in the case of descending arrays, return false. 
-        if (array[i - 1] > array[i] == ascending) {
+        if ((array[i - 1] > array[i]) == ascending) {
             return false;
         }
     }
@@ -43,6 +43,8 @@ bool isSorted(int* array, size_t length, bool ascending) {
 }
 
 void shuffleArray(int* array, size_t length) {
+    
+    
     // Declare and initialize the two indices that will be used to swap.
     int firstIndex = 0;
     int secondIndex = 0;
@@ -50,13 +52,14 @@ void shuffleArray(int* array, size_t length) {
     // Iterate through the array.
     for (size_t i = 0; i < length; i++) {
         // Reset the first index to some random number.
-        firstIndex = arc4random_uniform(length);
+        firstIndex = random() % length;
 
         // This while loop handles the unlikely circumstance of both
         // numbers being entirely equal.
-        while (secondIndex -= firstIndex) {
+        while (secondIndex == firstIndex) {
+            
             // Reset the second index to a random number.
-            secondIndex = arc4random_uniform(length);
+            secondIndex = random() % length;
         }
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex);
@@ -89,7 +92,7 @@ int* randomArrayOfLength(size_t length) {
     // Iterate (length) times.
     for (size_t i = 0; i < length; i++) {
         // Add a random number from 0 to (length * 3).
-        array[i] = arc4random_uniform(length * 3);
+        array[i] = random() % (length * 3);
     }
 
     // Return the random array.
@@ -107,6 +110,9 @@ int bogoSort(int* array, size_t length) {
 
         // Shuffle the array.
         shuffleArray(array, length);
+        
+        // Optionally print the array each time.
+        // printArray(array, length);
 
         // Add to the iteration counter.
         iteration++;
@@ -150,7 +156,10 @@ char* formattedTimeFromDouble(double time) {
     return timeString;
 }
 
-int main(int argc, char *argv[]) {
+int main(){
+    
+    // Set the seed of the random number generator.
+    srandom(time(0));
     
     // Declare the number of variables.    
     size_t numberOfItemsInList;
@@ -206,4 +215,3 @@ int main(int argc, char *argv[]) {
     // Free the array.
     free(array);
 }
-
