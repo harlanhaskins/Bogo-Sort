@@ -3,10 +3,7 @@
 #include <time.h>
 #include <math.h>
 #include <locale.h>
-
-typedef int bool;
-#define true 1
-#define false 0
+#include <stdbool.h>
 
 void swap(int *array, int firstIndex, int secondIndex) {
     int temp = array[firstIndex];
