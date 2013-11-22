@@ -7,10 +7,6 @@
 typedef int bool;
 #define true 1
 #define false 0
-#define True true
-#define False false
-#define YES True
-#define NO False
 
 void swap(int *array, int firstIndex, int secondIndex) {
     int temp = array[firstIndex];

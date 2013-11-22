@@ -44,7 +44,7 @@ def randomListWithNumberOfObjects(n):
 
     # Iterate to the number and add random integer (1 - 100)
     for number in range(n):
-        lst += [random.randint(0, 100)]
+        lst += [random.randint(0, 3 * n)]
     
     # Return that new list.
     return lst
