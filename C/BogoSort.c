@@ -99,9 +99,9 @@ int* randomArrayOfLength(size_t length) {
     return array;
 }
 
-int bogoSort(int* array, size_t length) {
+long long unsigned int bogoSort(int* array, size_t length) {
     // Initialize a number of iterations.
-    int iteration = 0;
+    long long unsigned int iteration = 0;
 
     // Run a loop while the array is not sorted. This is an O(n) operation
     // running multiple millions of times. Deal with it.
@@ -181,7 +181,7 @@ int main(){
     
     // Grab the numberOfIterations returned by BogoSorting the 
     // array.
-    int numberOfIterations = bogoSort(array, numberOfItemsInList);
+    long long unsigned int numberOfIterations = bogoSort(array, numberOfItemsInList);
     
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();
@@ -207,7 +207,7 @@ int main(){
 
     // Print the number of times, formatted with thousands separators
     // (thanks, locale.h.)
-    printf("I shuffled it %'d times.\n", numberOfIterations);
+    printf("I shuffled it %'llu times.\n", numberOfIterations);
     
     // Free the timeString.
     free(timeString);
@@ -215,3 +215,4 @@ int main(){
     // Free the array.
     free(array);
 }
+
