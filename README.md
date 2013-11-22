@@ -14,7 +14,9 @@ Usage
 ======
 
     python3 BogoSort.py
+
 or
+
     make BogoSort
     ./BogoSort
 
