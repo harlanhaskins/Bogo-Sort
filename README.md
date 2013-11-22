@@ -26,9 +26,9 @@ BogoSort will generate a list of the length you specify and sort it. Intelligent
 
 Sample Output
 ======
-
-    How many items would you like in your list? 8
-    [66, 41, 47, 35, 10, 13, 13, 46]
-    [10, 13, 13, 35, 41, 46, 47, 66]
-    It took me 0:00:00.126353 to sort this list.
-    I shuffled it 2,479 times.
+    
+    How many items would you like in your list? 13
+    [27, 21, 35, 9, 12, 3, 6, 23, 25, 32, 35, 36, 37]
+    [3, 6, 9, 12, 21, 23, 25, 27, 32, 35, 35, 36, 37]
+    It took me 00:37:35.218139 to BogoSort this list.
+    I shuffled it 9,185,663,135 times.
