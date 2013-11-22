@@ -13,7 +13,10 @@ Step Two: ...Shuffle the list and go back to step one!
 Usage
 ======
 
-    python3 bogoSort.py
+    python3 BogoSort.py
+or
+    make BogoSort
+    ./BogoSort
 
 And follow the prompts.
 
