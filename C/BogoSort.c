@@ -31,7 +31,6 @@ void shuffleArray(int* array, int length) {
         while (secondIndex -= firstIndex) {
             secondIndex = arc4random_uniform(length);
         }
-        // printf("First Index: %d\nSecond Index: %d\n", firstIndex, secondIndex);
         swap(array, firstIndex, secondIndex);
     }
 }
