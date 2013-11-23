@@ -1,4 +1,4 @@
-CFLAGS= -Wall -std=gnu99
+CFLAGS= -Wall -std=gnu99 -lm
 
 clean:
 	rm BogoSort
