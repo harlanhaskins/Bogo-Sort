@@ -143,9 +143,9 @@ char* formattedTimeFromDouble(double time) {
     // Subtract the number of minutes (in seconds) from the timestamp.
     time -= (minutes * SECONDS_PER_MINUTE);
     
-    // Allocate 13 spaces (00:00:00.000), which is 12, plus a null
+    // Allocate 13 char spaces (00:00:00.000), which is 12, plus a null
     // terminator.
-    char* timeString = malloc(13 * sizeof(char));
+    char* timeString = malloc(13);
 
     // Fill the timeString buffer with the result of sprintf, using the
     // %02d format specifier (2 digit number, filling with zeroes) and the
