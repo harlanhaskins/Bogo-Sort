@@ -37,7 +37,6 @@ bool isSorted(int* array, size_t length, bool ascending) {
             return false;
         }
     }
-
     // If the for loop exited successfully, return true.
     return true;
 }
@@ -51,13 +50,23 @@ void shuffleArray(int* array, size_t length) {
 
     // Iterate through the array.
     for (size_t i = 0; i < length; i++) {
+        if (length == 2) {
+            /* There's only one possibility for an array of two objects,
+               and sometimes (becasue of modulo bias) it will constantly
+               switch the same index.
+              
+               Doing this means we will do the only possibility for a 
+               two item array.
+            */
+            swap(array, 0, 1);
+            return;
+        }
         // Reset the first index to some random number.
         firstIndex = random() % length;
 
         // This while loop handles the unlikely circumstance of both
         // numbers being entirely equal.
         while (secondIndex == firstIndex) {
-            
             // Reset the second index to a random number.
             secondIndex = random() % length;
         }
@@ -181,7 +190,8 @@ int main(){
     
     // Grab the numberOfIterations returned by BogoSorting the 
     // array.
-    long long unsigned int numberOfIterations = bogoSort(array, numberOfItemsInList);
+    long long unsigned int numberOfIterations = bogoSort(array,
+                                                         numberOfItemsInList);
     
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();
@@ -205,9 +215,13 @@ int main(){
     // Set the locale to LC_NUMERIC so we can use the ' flag in our format.
     setlocale(LC_NUMERIC, "");
 
+    // Create a string that says 'times' or 'time' depending whether or not there
+    // was only one iteration.
+    char* numberOfTimesString = numberOfIterations == 1 ? "time" : "times";
+    
     // Print the number of times, formatted with thousands separators
     // (thanks, locale.h.)
-    printf("I shuffled it %'llu times.\n", numberOfIterations);
+    printf("I shuffled it %'llu %s.\n", numberOfIterations, numberOfTimesString);
     
     // Free the timeString.
     free(timeString);
