@@ -77,7 +77,7 @@ void shuffleArray(int* array, size_t length) {
 
 void printArray(int* array, size_t length) {
     // Print a bracket (for pretty printing.)
-    printf("[");
+    putchar('[');
 
     // Iterate through the numbers in the array.
     for (size_t i = 0; i < length; i++) {
@@ -87,11 +87,11 @@ void printArray(int* array, size_t length) {
         // If the number is not the last number in the array...
         if (i != length - 1) {
             // ...then print a comma and a space after it.
-            printf(", ");
+            fputs(", ", stdout);
         }
     }
     // Print the closing bracket and the newline character.
-    printf("]\n");
+    puts("]");
 }
 
 int* randomArrayOfLength(size_t length) {
@@ -174,7 +174,7 @@ int main(){
     size_t numberOfItemsInList;
     
     // Print a question for the user.
-    printf("How many items would you like in your list? ");
+    fputs("How many items would you like in your list? ", stdout);
     
     // Scan user input and fill the buffer we declared.
     scanf("%zu", &numberOfItemsInList);
