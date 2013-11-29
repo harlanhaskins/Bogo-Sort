@@ -7,9 +7,6 @@
 // For clock() and the clock_t type.
 #include <time.h>
 
-// For floor()
-#include <math.h>
-
 // For setLocale() and the ' format flag.
 #include <locale.h>
 
@@ -91,7 +88,8 @@ void printArray(int* array, size_t length) {
         }
     }
     // Print the closing bracket and the newline character.
-    puts("]");
+    putchar(']');
+    putchar('\n');
 }
 
 int* randomArrayOfLength(size_t length) {
@@ -140,21 +138,21 @@ char* formattedTimeFromDouble(double time) {
     
     // Get the number of hours in the elapsed time by dividing by
     // SECONDS_PER_HOUR and rounding down.
-    int hours = floor(time / SECONDS_PER_HOUR);
+    int hours = (time / SECONDS_PER_HOUR);
     
     // Subtract the number of hours (in seconds) from the timestamp.
     time -= (hours * SECONDS_PER_HOUR);
 
     // Get the number of minutes in the elapsed time by dividing by
     // SECONDS_PER_MINUTE and rounding down.
-    int minutes = floor(time / SECONDS_PER_MINUTE);
+    int minutes = (time / SECONDS_PER_MINUTE);
     
     // Subtract the number of minutes (in seconds) from the timestamp.
     time -= (minutes * SECONDS_PER_MINUTE);
     
     // Allocate 13 char spaces (00:00:00.000), which is 12, plus a null
     // terminator.
-    char* timeString = malloc(13);
+    char* timeString = malloc(13); 
 
     // Fill the timeString buffer with the result of sprintf, using the
     // %02d format specifier (2 digit number, filling with zeroes) and the
