@@ -1,14 +1,5 @@
-// For printf() and sprintf().
-#include <stdio.h>
-
-// For srandom and random
-#include <stdlib.h>
-
-// For clock() and the clock_t type.
-#include <time.h>
-
-// For setLocale() and the ' format flag.
-#include <locale.h>
+// Include the header.
+#include "BogoSort.h"
 
 void swap(int *array, int firstIndex, int secondIndex) {
     // Create a temp variable to store the first index, because we'll
@@ -36,7 +27,6 @@ unsigned int isSorted(int* array, size_t length) {
 }
 
 void shuffleArray(int* array, size_t length) {
-    
     
     // Declare and initialize the two indices that will be used to swap.
     int firstIndex = 0;
@@ -160,8 +150,7 @@ char* formattedTimeFromDouble(double time) {
     return timeString;
 }
 
-int main(){
-    
+void runBogoSort() {
     // Set the seed of the random number generator.
     srandom(time(0));
     
@@ -225,3 +214,7 @@ int main(){
     free(array);
 }
 
+int main() {
+    runBogoSort();
+    return 0;
+}
