@@ -10,9 +10,6 @@
 // For setLocale() and the ' format flag.
 #include <locale.h>
 
-// For boolean variables.
-#include <stdbool.h>
-
 void swap(int *array, int firstIndex, int secondIndex) {
     // Create a temp variable to store the first index, because we'll
     // be overwriting it.
@@ -25,17 +22,17 @@ void swap(int *array, int firstIndex, int secondIndex) {
     array[secondIndex] = temp;
 }
 
-bool isSorted(int* array, size_t length, bool ascending) {
+unsigned int isSorted(int* array, size_t length) {
     // Iterate through the array.
     for (size_t i = 1; i < length; i++) {
         // If at any point the previous array item is greater than (or
         // less than, in the case of descending arrays, return false. 
-        if ((array[i - 1] > array[i]) == ascending) {
-            return false;
+        if (array[i - 1] > array[i]) {
+            return 0;
         }
     }
     // If the for loop exited successfully, return true.
-    return true;
+    return 1;
 }
 
 void shuffleArray(int* array, size_t length) {
@@ -112,7 +109,7 @@ long long unsigned int bogoSort(int* array, size_t length) {
 
     // Run a loop while the array is not sorted. This is an O(n) operation
     // running multiple millions of times. Deal with it.
-    while (!isSorted(array, length, true)) {
+    while (!isSorted(array, length)) {
         // If you're in this loop, congratulations, the list isn't sorted.
 
         // Shuffle the array.
