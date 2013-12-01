@@ -1,16 +1,17 @@
 // Include the header.
 #include "BogoSort.h"
 
-void swap(int *array, int firstIndex, int secondIndex) {
+void swap(int* array, int firstIndex, int secondIndex) {
     // Create a temp variable to store the first index, because we'll
     // be overwriting it.
-    int temp = array[firstIndex];
+    int firstNumber = array[firstIndex];
+    int secondNumber = array[secondIndex];
 
     // Set the value at the first index to the value at the second index.
-    array[firstIndex] = array[secondIndex];
+    array[firstIndex] = secondNumber;
 
     // Set the value at the second index to the value of the first index.
-    array[secondIndex] = temp;
+    array[secondIndex] = firstNumber;
 }
 
 unsigned int isSorted(int* array, size_t length) {
@@ -30,7 +31,14 @@ int randomIntegerInRange(size_t min, size_t max)
 {
     double scaled = (double)rand( )/ RAND_MAX;
     
-    return (max - min +1) * scaled + min;
+    int random = (max - min + 1) * scaled + min;
+    
+    if (random > max) {
+        printf("Error: Random number too high.");
+        abort();
+    }
+    
+    return random;
 }
 
 void shuffleArray(int* array, size_t length) {
@@ -53,17 +61,9 @@ void shuffleArray(int* array, size_t length) {
             return;
         }
         // Reset the first index to some random number.
-        firstIndex = randomIntegerInRange(0, length);
-
-        // This while loop handles the unlikely circumstance of both
-        // numbers being entirely equal.
-        //int i = 0;
-        while (secondIndex == firstIndex) {
-            
-            //printf("%d\n", ++i);
-            // Reset the second index to a random number.
-            secondIndex = randomIntegerInRange(0, length);
-        }
+        firstIndex = randomIntegerInRange(0, (length - 1));
+        secondIndex = randomIntegerInRange(0, (length - 1));
+        
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex);
     }
@@ -93,9 +93,18 @@ void printArray(int* array, size_t length) {
     printArrayToFile(array, length, stdout);
 }
 
+void* cautiousMalloc(size_t size) {
+    void* thing = malloc(size);
+    if (!thing) {
+        printf("Out of memory. Sorry.\n");
+        exit(EXIT_FAILURE);
+    }
+    return thing;
+}
+
 int* randomArrayOfLength(size_t length) {
     // Allocate an array of the length specified.
-    int *array = malloc(length * sizeof(int));
+    int *array = (int*)cautiousMalloc((int)length * sizeof(int));
 
     // Iterate (length) times.
     for (size_t i = 0; i < length; i++) {
@@ -153,7 +162,7 @@ char* formattedTimeFromDouble(double time) {
     
     // Allocate 13 char spaces (00:00:00.000), which is 12, plus a null
     // terminator.
-    char* timeString = malloc(13); 
+    char* timeString = cautiousMalloc(13);
 
     // Fill the timeString buffer with the result of sprintf, using the
     // %02d format specifier (2 digit number, filling with zeroes) and the

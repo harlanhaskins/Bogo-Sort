@@ -36,4 +36,6 @@ int randonImtegerInRange(size_t min, size_t max);
 
 void runBogoSort();
 
+void* cautiousMalloc(size_t size);
+
 #endif

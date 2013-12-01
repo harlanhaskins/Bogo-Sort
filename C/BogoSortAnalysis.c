@@ -8,12 +8,14 @@ size_t stringLength(char* string) {
 
 void analyzeBogoSort() {
     
-    int bufferSize = 32;
+    int bufferSize = 256;
     
     char buffer[bufferSize];
     
     fputs("Where would you like me to save this file? ", stdout);
     fgets(buffer, bufferSize, stdin);
+    
+    // Remove the newline from the end of fgets.
     size_t len = stringLength(buffer);
     if (buffer[len - 1] == '\n')
         buffer[len - 1] = '\0';

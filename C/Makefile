@@ -1,7 +1,7 @@
-CFLAGS= -Wall -std=gnu99 -Wextra -pedantic
+CFLAGS= -Wall -std=gnu99 -Wextra -pedantic -g
 
 all:
-	clang *.c *.h
+	clang $(CFLAGS) *.c *.h
 	mv a.out BogoSort
 	clear
 
