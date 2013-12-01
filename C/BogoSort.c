@@ -40,7 +40,7 @@ int randomIntegerInRange(size_t min, size_t max)
     
     int random = (max - min + 1) * scaled + min;
     
-    if (random > max) {
+    if ((size_t)random > max) {
         printf("Error: Random number too high.");
         abort();
     }
