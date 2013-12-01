@@ -1,5 +1,10 @@
 #include "BogoSortAnalysis.h"
-#include <string.h>
+
+size_t stringLength(char* string) {
+    int i = 0;
+    while (string[i] != '\0') i++;
+    return i;
+}
 
 void analyzeBogoSort() {
     
@@ -9,7 +14,7 @@ void analyzeBogoSort() {
     
     fputs("Where would you like me to save this file? ", stdout);
     fgets(buffer, bufferSize, stdin);
-    size_t len = strlen(buffer);
+    size_t len = stringLength(buffer);
     if (buffer[len - 1] == '\n')
         buffer[len - 1] = '\0';
     
