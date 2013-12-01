@@ -1,15 +1,21 @@
 #include "BogoSortAnalysis.h"
+#include <string.h>
 
 void analyzeBogoSort() {
     
-    
-    int bufferSize = 256;
+    int bufferSize = 32;
     
     char buffer[bufferSize];
     
     fputs("Where would you like me to save this file? ", stdout);
     fgets(buffer, bufferSize, stdin);
-    char* fileName = buffer;
+    size_t len = strlen(buffer);
+    if (buffer[len - 1] == '\n')
+        buffer[len - 1] = '\0';
+    
+    FILE* outputFile = fopen(buffer, "w");
+    
+    if (outputFile == NULL) return;
     
     fputs("Up to how many items do you want to test? ", stdout);
     fgets(buffer, bufferSize, stdin);
@@ -19,11 +25,7 @@ void analyzeBogoSort() {
     fgets(buffer, bufferSize, stdin);
     int numberOfTrials = atoi(buffer);
     
-    FILE *outputFile = fopen(fileName, "w");
-    
-    if (outputFile == NULL) return;
-    
-    srand((unsigned int)time(0));
+    srand((unsigned int)time(NULL));
 
     for (size_t length = 1; length <= endingLength; length++) {
         for (int trial = 1; trial <= numberOfTrials; trial++) {
@@ -35,7 +37,7 @@ void analyzeBogoSort() {
             clock_t end = clock();
             
             double elapsedTime = ((double)(end - start) / CLOCKS_PER_SEC);
-           
+            
             fprintf(outputFile, "%zu,%d,%f,%llu\n", length, trial, elapsedTime, iterations);
             
             free(array);
@@ -43,6 +45,4 @@ void analyzeBogoSort() {
     }
     
     fclose(outputFile);
-    
-    free(fileName);
 }
