@@ -26,6 +26,13 @@ unsigned int isSorted(int* array, size_t length) {
     return 1;
 }
 
+int randomIntegerInRange(size_t min, size_t max)
+{
+    double scaled = (double)rand( )/ RAND_MAX;
+    
+    return (max - min +1) * scaled + min;
+}
+
 void shuffleArray(int* array, size_t length) {
     
     // Declare and initialize the two indices that will be used to swap.
@@ -46,37 +53,44 @@ void shuffleArray(int* array, size_t length) {
             return;
         }
         // Reset the first index to some random number.
-        firstIndex = random() % length;
+        firstIndex = randomIntegerInRange(0, length);
 
         // This while loop handles the unlikely circumstance of both
         // numbers being entirely equal.
+        //int i = 0;
         while (secondIndex == firstIndex) {
+            
+            //printf("%d\n", ++i);
             // Reset the second index to a random number.
-            secondIndex = random() % length;
+            secondIndex = randomIntegerInRange(0, length);
         }
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex);
     }
 }
 
-void printArray(int* array, size_t length) {
+void printArrayToFile(int* array, size_t length, FILE *output) {
     // Print a bracket (for pretty printing.)
-    putchar('[');
+    putc('[', output);
 
     // Iterate through the numbers in the array.
     for (size_t i = 0; i < length; i++) {
         // Print the number at the current index
-        printf("%d", array[i]);
+        fprintf(output, "%d", array[i]);
 
         // If the number is not the last number in the array...
         if (i != length - 1) {
             // ...then print a comma and a space after it.
-            fputs(", ", stdout);
+            fputs(", ", output);
         }
     }
     // Print the closing bracket and the newline character.
-    putchar(']');
-    putchar('\n');
+    putc(']', output);
+    putc('\n', output);
+}
+
+void printArray(int* array, size_t length) {
+    printArrayToFile(array, length, stdout);
 }
 
 int* randomArrayOfLength(size_t length) {
@@ -85,8 +99,8 @@ int* randomArrayOfLength(size_t length) {
 
     // Iterate (length) times.
     for (size_t i = 0; i < length; i++) {
-        // Add a random number from 0 to (length * 3).
-        array[i] = random() % (length * 3);
+        // Add a random number from 0 to (length * 10).
+        array[i] = randomIntegerInRange(0, length * 10);
     }
 
     // Return the random array.
@@ -152,16 +166,20 @@ char* formattedTimeFromDouble(double time) {
 
 void runBogoSort() {
     // Set the seed of the random number generator.
-    srandom(time(0));
+    srand((unsigned int)time(NULL));
     
-    // Declare the number of variables.    
-    size_t numberOfItemsInList;
     
     // Print a question for the user.
     fputs("How many items would you like in your list? ", stdout);
     
-    // Scan user input and fill the buffer we declared.
-    scanf("%zu", &numberOfItemsInList);
+    int bufferSize = sizeof(int);
+    
+    char buffer[bufferSize];
+    
+    fgets (buffer, bufferSize, stdin);
+    
+    // Declare the number of variables.
+    size_t numberOfItemsInList = atoi(buffer);
 
     // Grab an array of random items.
     int* array = randomArrayOfLength(numberOfItemsInList); 
@@ -212,9 +230,4 @@ void runBogoSort() {
 
     // Free the array.
     free(array);
-}
-
-int main() {
-    runBogoSort();
-    return 0;
 }
