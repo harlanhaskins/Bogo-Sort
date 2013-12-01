@@ -17,8 +17,7 @@ Usage
 
 or
 
-    make BogoSort
-    ./BogoSort
+    make; ./BogoSort
 
 And follow the prompts.
 
