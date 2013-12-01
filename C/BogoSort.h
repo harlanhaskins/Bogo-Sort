@@ -22,7 +22,7 @@ void printArray(int* array, size_t length);
 
 void printArrayToFile(int* array, size_t length, FILE* outputfile);
 
-void swap(int* array, int firstIndex, int secondIndex);
+void swap(int* array, int firstIndex, int secondIndex, size_t length);
 
 unsigned int isSorted(int* array, size_t length);
 

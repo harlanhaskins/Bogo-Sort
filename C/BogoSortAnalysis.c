@@ -12,18 +12,6 @@ void analyzeBogoSort() {
     
     char buffer[bufferSize];
     
-    fputs("Where would you like me to save this file? ", stdout);
-    fgets(buffer, bufferSize, stdin);
-    
-    // Remove the newline from the end of fgets.
-    size_t len = stringLength(buffer);
-    if (buffer[len - 1] == '\n')
-        buffer[len - 1] = '\0';
-    
-    FILE* outputFile = fopen(buffer, "w");
-    
-    if (outputFile == NULL) return;
-    
     fputs("Up to how many items do you want to test? ", stdout);
     fgets(buffer, bufferSize, stdin);
     size_t endingLength = atoi(buffer);
@@ -31,6 +19,24 @@ void analyzeBogoSort() {
     fputs("How many trials would you like to run? ", stdout);
     fgets(buffer, bufferSize, stdin);
     int numberOfTrials = atoi(buffer);
+    
+    time_t rawtime;
+    struct tm * timeinfo;
+    char timeBuffer[80];
+    
+    time ( &rawtime );
+    
+    timeinfo = localtime ( &rawtime );
+    
+    strftime (timeBuffer, 80, "%Y%m%dT%I%M%S%p", timeinfo);
+    
+    sprintf(buffer, "BogoSort_%d-trials_%zu-items_%s.csv", numberOfTrials, endingLength, timeBuffer);
+    
+    FILE* outputFile = fopen(buffer, "w");
+    
+    if (outputFile == NULL) return;
+    
+    fprintf(outputFile, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
     
     srand((unsigned int)time(NULL));
 
@@ -52,4 +58,6 @@ void analyzeBogoSort() {
     }
     
     fclose(outputFile);
+    
+    printf("\nYour results are available in %s\n", buffer);
 }

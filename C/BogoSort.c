@@ -1,7 +1,14 @@
 // Include the header.
 #include "BogoSort.h"
 
-void swap(int* array, int firstIndex, int secondIndex) {
+void swap(int* array, int firstIndex, int secondIndex, size_t length) {
+    
+    int largestIndex = (int)(length - 1);
+    if (firstIndex > largestIndex || secondIndex > largestIndex) {
+        printf("Error - Invalid Random Index: %d or %d is greater than %d", firstIndex, secondIndex, largestIndex);
+        exit(EXIT_FAILURE);
+    }
+    
     // Create a temp variable to store the first index, because we'll
     // be overwriting it.
     int firstNumber = array[firstIndex];
@@ -57,7 +64,7 @@ void shuffleArray(int* array, size_t length) {
                Doing this means we will do the only possibility for a 
                two item array.
             */
-            swap(array, 0, 1);
+            swap(array, 0, 1, length);
             return;
         }
         // Reset the first index to some random number.
@@ -65,7 +72,7 @@ void shuffleArray(int* array, size_t length) {
         secondIndex = randomIntegerInRange(0, (length - 1));
         
         // Run the swap function with the two random indices.
-        swap(array, firstIndex, secondIndex);
+        swap(array, firstIndex, secondIndex, length);
     }
 }
 
