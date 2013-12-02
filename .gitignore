@@ -2,3 +2,4 @@
 BogoSort
 *.gch
 .DS_Store
+*.o
