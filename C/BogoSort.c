@@ -174,7 +174,7 @@ char* formattedTimeFromDouble(double time) {
     // Fill the timeString buffer with the result of sprintf, using the
     // %02d format specifier (2 digit number, filling with zeroes) and the
     // float specifier, for the seconds.
-    sprintf(timeString, "%02d:%02d:%f", hours, minutes, time);
+    snprintf(timeString, 13, "%02d:%02d:%f", hours, minutes, time);
 
     // Return the timeString.
     return timeString;
