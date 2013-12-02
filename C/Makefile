@@ -1,9 +1,19 @@
-CFLAGS= -Wall -std=gnu99 -Wextra -pedantic -g
+CC=clang
+CFLAGS=-Wall -std=gnu99 -Wextra -pedantic -g
+EXENAME=BogoSort
+CFILES=main.c BogoSortAnalysis.c BogoSort.c
+COBJFILES=$(CFILES:c=o)
+EXECUTABLES=$(EXENAME)
 
-all:
-	clang $(CFLAGS) *.c *.h
-	mv a.out BogoSort
-	clear
+all: $(EXENAME)
+
+$(EXENAME): $(COBJFILES)
 
 install:
-	cp BogoSort /usr/local/bin/
+	cp $(EXECUTABLES) /usr/local/bin/
+
+clean:
+	rm -rf $(COBJFILES)
+
+realclean purge: clean
+	rm -rf $(EXECUTABLES)
