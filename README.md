@@ -13,7 +13,7 @@ Step Two: ...Shuffle the list and go back to step one!
 Usage
 ======
 
-    python3 BogoSort.py
+    python3 main.py
 
 or
 
