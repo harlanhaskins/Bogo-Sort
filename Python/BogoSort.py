@@ -44,12 +44,12 @@ def randomListWithNumberOfObjects(n):
 
     # Iterate to the number and add random integer (1 - 100)
     for number in range(n):
-        lst += [random.randint(0, 3 * n)]
+        lst.append(random.randint(0, 10 * n))
     
     # Return that new list.
     return lst
 
-def main():
+def runBogoSort():
     # Prompt the user for a number of items for the list.
     number = input("How many items would you like in your list? ")
     
@@ -92,6 +92,3 @@ def main():
     
     # Print the number of iterations.
     print("I shuffled it " + formattedIterations + " " + timeString + ".")
-
-# Call the main function.
-main()
