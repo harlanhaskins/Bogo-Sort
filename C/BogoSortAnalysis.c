@@ -7,7 +7,9 @@ size_t stringLength(char* string) {
 }
 
 void analyzeBogoSort() {
-    
+   
+    char* outputDir = outputDirectory();
+
     int bufferSize = 256;
     
     char buffer[bufferSize];
@@ -30,7 +32,7 @@ void analyzeBogoSort() {
     
     strftime (timeBuffer, 80, "%Y%m%dT%I%M%S%p", timeinfo);
     
-    sprintf(buffer, "BogoSort_%d-trials_%zu-items_%s.csv", numberOfTrials, endingLength, timeBuffer);
+    sprintf(buffer, "%s/BogoSort_%d-trials_%zu-items_%s.csv", outputDir, numberOfTrials, endingLength, timeBuffer);
     
     FILE* outputFile = fopen(buffer, "w");
     
@@ -60,4 +62,10 @@ void analyzeBogoSort() {
     fclose(outputFile);
     
     printf("\nYour results are available in %s\n", buffer);
+}
+
+char* outputDirectory() {
+    char* directory = "./Results";
+    mkdir(directory, S_IRWXU);
+    return directory;
 }

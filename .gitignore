@@ -3,3 +3,5 @@ BogoSort
 *.gch
 .DS_Store
 *.o
+*.csv
+Results/

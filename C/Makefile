@@ -2,6 +2,7 @@ CC=clang
 CFLAGS=-Wall -std=gnu99 -Wextra -pedantic -g
 EXENAME=BogoSort
 CFILES=main.c BogoSortAnalysis.c BogoSort.c
+COUTPUT=Results/
 COBJFILES=$(CFILES:c=o)
 EXECUTABLES=$(EXENAME)
 
@@ -17,3 +18,4 @@ clean:
 
 realclean purge: clean
 	rm -rf $(EXECUTABLES)
+	rm -rf $(COUTPUT)
