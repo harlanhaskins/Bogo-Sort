@@ -6,7 +6,7 @@ def runAnalysis():
     endingLength = int(input("Up to how many items would you like to test? "))
     numberOfTrials = int(input("How many trils would you like to run? "))
     
-    directory = "./Results"
+    directory = "./BogoSortResults"
     createPath(directory)
     fileName = directory + "/PythonBogoSort_" + str(numberOfTrials) + "-trials_" + str(endingLength) + "-items_" + datetime.datetime.now().strftime("%Y%m%dT%I%M%S%p") + ".csv"
     

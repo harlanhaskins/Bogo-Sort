@@ -65,7 +65,7 @@ void analyzeBogoSort() {
 }
 
 char* outputDirectory() {
-    char* directory = "./Results";
+    char* directory = "./BogoSortResults";
     mkdir(directory, S_IRWXU);
     return directory;
 }
