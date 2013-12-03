@@ -5,3 +5,4 @@ BogoSort
 *.o
 *.csv
 Results/
+__pychache__/
