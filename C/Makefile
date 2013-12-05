@@ -2,7 +2,7 @@ CC=clang
 CFLAGS=-Wall -std=gnu99 -Wextra -pedantic -g
 EXENAME=BogoSort
 CFILES=main.c BogoSortAnalysis.c BogoSort.c
-COUTPUT=Results/
+COUTPUT=BogoSortResults/
 COBJFILES=$(CFILES:c=o)
 EXECUTABLES=$(EXENAME)
 
