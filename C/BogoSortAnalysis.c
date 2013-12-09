@@ -6,21 +6,7 @@ size_t stringLength(char* string) {
     return i;
 }
 
-void analyzeBogoSort() {
-   
-    char* outputDir = outputDirectory();
-
-    int bufferSize = 256;
-    
-    char buffer[bufferSize];
-    
-    fputs("Up to how many items do you want to test? ", stdout);
-    fgets(buffer, bufferSize, stdin);
-    size_t endingLength = atoi(buffer);
-    
-    fputs("How many trials would you like to run? ", stdout);
-    fgets(buffer, bufferSize, stdin);
-    int numberOfTrials = atoi(buffer);
+void analyzeBogoSort(Options options) {
     
     time_t rawtime;
     struct tm * timeinfo;
@@ -32,7 +18,17 @@ void analyzeBogoSort() {
     
     strftime (timeBuffer, 80, "%Y%m%dT%I%M%S%p", timeinfo);
     
-    sprintf(buffer, "%s/BogoSort_%d-trials_%zu-items_%s.csv", outputDir, numberOfTrials, endingLength, timeBuffer);
+    char* outputDir = outputDirectory();
+    
+    char buffer[256];
+    if (!strcmp(options.outputFile, "")) {
+        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options.numberOfTests, options.highestLength, timeBuffer);
+        options.outputFile = buffer;
+    }
+    else {
+        sprintf(buffer, "%s/%s", outputDir, options.outputFile);
+        options.outputFile = buffer;
+    }
     
     FILE* outputFile = fopen(buffer, "w");
     
@@ -42,8 +38,8 @@ void analyzeBogoSort() {
     
     srand((unsigned int)time(NULL));
 
-    for (size_t length = 1; length <= endingLength; length++) {
-        for (int trial = 1; trial <= numberOfTrials; trial++) {
+    for (size_t length = 1; length <= (size_t)options.highestLength; length++) {
+        for (int trial = 1; trial <= options.numberOfTests; trial++) {
             
             int* array = randomArrayOfLength(length);
             
@@ -61,7 +57,7 @@ void analyzeBogoSort() {
     
     fclose(outputFile);
     
-    printf("\nYour results are available in %s\n", buffer);
+    printf("\nYour results are available in %s\n", options.outputFile);
 }
 
 char* outputDirectory() {

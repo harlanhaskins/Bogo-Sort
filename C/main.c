@@ -6,48 +6,75 @@
 //  Copyright (c) 2013 haskins. All rights reserved.
 //
 
-#include <stdio.h>
+#include <string.h>
 #include "BogoSort.h"
 #include "BogoSortAnalysis.h"
 
-void printMenu() {
-    puts("Welcome to BogoSort. Please enter the number of what you'd like to do.\n");
-    puts("\t1. Run a BogoSort");
-    puts("\t2. Save a series of BogoSorts");
-    puts("\t3. Quit\n");
-    
-    fputs("What would you like to do? ", stdout);
-    
-    int bufferSize = 256;
-    
-    char buffer[bufferSize];
-    
-    fgets (buffer, bufferSize, stdin);
-    int menuChoice = atoi(buffer);
-    
-    putchar('\n');
-    
-    switch (menuChoice) {
-        case 1: {
-            runBogoSort();
-            putchar('\n');
-            printMenu();
-            break;
-        }
-        case 2: {
-            analyzeBogoSort();
-            putchar('\n');
-            printMenu();
-            break;
-        }
-        default:
-            return;
+void runWithArguments(Options options) {
+    if (options.isSingleSort) {
+        runBogoSort(options.highestLength);
+    }
+    else {
+        analyzeBogoSort(options);
     }
 }
 
-int main()
-{
-    printMenu();
+void printUsage() {
+    puts("Usage: BogoSort [-s | -t numberOfTests] [-n highestLength] [-o filename]\n");
+    abort();
+}
+
+Options parseArguments(int argc, char** argv) {
+    
+    Options defaultOptions = {
+        .outputFile = "",
+        .numberOfTests = 0,
+        .highestLength = 0,
+        .isSingleSort = 0
+    };
+    
+    for (int i = 1; i < argc; i++) {
+        char* currentArgument = argv[i];
+        if (strcmp(currentArgument, "-o") == 0 || strcmp(currentArgument, "--output-file") == 0) {
+            if (i == (argc - 1) || argv[i + 1][0] == '-') {
+                printUsage();
+            }
+            i++;
+            defaultOptions.outputFile = argv[i];
+        }
+        else if (strcmp(currentArgument, "-t") == 0 || strcmp(currentArgument, "--trials") == 0) {
+            if (i == (argc - 1) || argv[i + 1][0] == '-' || defaultOptions.isSingleSort) {
+                printUsage();
+            }
+            i++;
+            defaultOptions.numberOfTests = atoi(argv[i]);
+        }
+        else if (strcmp(currentArgument, "-n") == 0 || strcmp(currentArgument, "--number") == 0) {
+            if (i == (argc - 1) || argv[i + 1][0] == '-') {
+                printUsage();
+            }
+            i++;
+            defaultOptions.highestLength = atoi(argv[i]);
+        }
+        else if (strcmp(currentArgument, "-s") == 0 || strcmp(currentArgument, "--single") == 0) {
+            if (defaultOptions.numberOfTests) {
+                printUsage();
+            }
+            defaultOptions.isSingleSort = 1;
+        }
+        else {
+            printUsage();
+        }
+    }
+    if (!defaultOptions.isSingleSort && !defaultOptions.numberOfTests) {
+        printUsage();
+    }
+    return defaultOptions;
+}
+
+int main(int argc, char** argv) {
+    Options options = parseArguments(argc, argv);
+    runWithArguments(options);
     return 0;
 }
 

@@ -34,7 +34,7 @@ char* formattedTimeFromDouble(double elapsedTime);
 
 int randonImtegerInRange(size_t min, size_t max);
 
-void runBogoSort();
+void runBogoSort(int numberOfItemsInList);
 
 void* cautiousMalloc(size_t size);
 

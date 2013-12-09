@@ -180,22 +180,9 @@ char* formattedTimeFromDouble(double time) {
     return timeString;
 }
 
-void runBogoSort() {
+void runBogoSort(int numberOfItemsInList) {
     // Set the seed of the random number generator.
     srand((unsigned int)time(NULL));
-    
-    
-    // Print a question for the user.
-    fputs("How many items would you like in your list? ", stdout);
-    
-    int bufferSize = sizeof(int);
-    
-    char buffer[bufferSize];
-    
-    fgets (buffer, bufferSize, stdin);
-    
-    // Declare the number of variables.
-    size_t numberOfItemsInList = atoi(buffer);
 
     // Grab an array of random items.
     int* array = randomArrayOfLength(numberOfItemsInList); 
@@ -209,7 +196,8 @@ void runBogoSort() {
     // Grab the numberOfIterations returned by BogoSorting the 
     // array.
     long long unsigned int numberOfIterations = bogoSort(array,
-                                                         numberOfItemsInList);
+                                                         numberOfItemsInList
+                                                         );
     
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();

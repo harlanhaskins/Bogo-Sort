@@ -19,8 +19,6 @@ or
 
     make; ./BogoSort
 
-And follow the prompts.
-
 BogoSort will generate a list of the length you specify and sort it. Intelligently.
 
 Sample Output
