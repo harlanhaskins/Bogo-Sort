@@ -1,11 +1,11 @@
 // Include the header.
 #include "BogoSort.h"
 
-void swap(int* array, int firstIndex, int secondIndex, size_t length) {
+void swap(int *array, int firstIndex, int secondIndex, size_t length) {
     
     int largestIndex = (int)(length - 1);
     if (firstIndex > largestIndex || secondIndex > largestIndex) {
-        printf("Error - Invalid Random Index: %d or %d is greater than %d", firstIndex, secondIndex, largestIndex);
+        printf("Error - Invalid Random Index: %d or %d is greater than %d\n", firstIndex, secondIndex, largestIndex);
         exit(EXIT_FAILURE);
     }
     
@@ -41,7 +41,7 @@ int randomIntegerInRange(size_t min, size_t max)
     int random = (max - min + 1) * scaled + min;
     
     if ((size_t)random > max) {
-        printf("Error: Random number too high.");
+        printf("Error: Random number too high.\n");
         abort();
     }
     
@@ -103,7 +103,7 @@ void printArray(int* array, size_t length) {
 void* cautiousMalloc(size_t size) {
     void* thing = malloc(size);
     if (!thing) {
-        printf("Out of memory. Sorry.\n");
+        perror("malloc");
         exit(EXIT_FAILURE);
     }
     return thing;
@@ -150,8 +150,8 @@ long long unsigned int bogoSort(int* array, size_t length) {
 char* formattedTimeFromDouble(double time) {
     // Set some constants to use to calculate the number of hours,
     // minutes, etc.
-    const int SECONDS_PER_MINUTE = 60;
-    const int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60;
+#define SECONDS_PER_MINUTE 60
+#define SECONDS_PER_HOUR (SECONDS_PER_MINUTE * 60)
     
     // Get the number of hours in the elapsed time by dividing by
     // SECONDS_PER_HOUR and rounding down.

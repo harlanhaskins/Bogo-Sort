@@ -1,11 +1,5 @@
 #include "BogoSortAnalysis.h"
 
-size_t stringLength(char* string) {
-    int i = 0;
-    while (string[i] != '\0') i++;
-    return i;
-}
-
 void analyzeBogoSort(Options options) {
     
     time_t rawtime;
@@ -22,7 +16,12 @@ void analyzeBogoSort(Options options) {
     
     char buffer[256];
     if (!strcmp(options.outputFile, "")) {
-        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options.numberOfTests, options.highestLength, timeBuffer);
+        /*
+         * size_t len = strlen(outputDir) + (do math for max numb of chars in options.numberOfTests) + highestLength same math + strlen(timeBuffer) + 1;
+         * char str[len];
+         */
+
+        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options.numberOfTests, options.endingLength, timeBuffer);
         options.outputFile = buffer;
     }
     else {
@@ -38,7 +37,7 @@ void analyzeBogoSort(Options options) {
     
     srand((unsigned int)time(NULL));
 
-    for (size_t length = 1; length <= (size_t)options.highestLength; length++) {
+    for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.endingLength; length++) {
         for (int trial = 1; trial <= options.numberOfTests; trial++) {
             
             int* array = randomArrayOfLength(length);

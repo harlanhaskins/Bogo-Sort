@@ -18,8 +18,10 @@
 typedef struct Options {
     char* outputFile;
     int numberOfTests;
-    int highestLength;
+    int beginningLength;
+    int endingLength;
     int isSingleSort;
+
 } Options;
 
 void analyzeBogoSort(Options options);

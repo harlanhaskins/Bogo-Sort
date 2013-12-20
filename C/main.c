@@ -12,7 +12,7 @@
 
 void runWithArguments(Options options) {
     if (options.isSingleSort) {
-        runBogoSort(options.highestLength);
+        runBogoSort(options.endingLength);
     }
     else {
         analyzeBogoSort(options);
@@ -20,7 +20,7 @@ void runWithArguments(Options options) {
 }
 
 void printUsage() {
-    puts("Usage: BogoSort [-s | -t numberOfTests] [-n highestLength] [-o filename]\n");
+    puts("Usage: BogoSort [-s | -t numberOfTests] [-b beginningLength] [-e endingLength | -n numberOfItems] [-o filename]\n");
     abort();
 }
 
@@ -29,7 +29,8 @@ Options parseArguments(int argc, char** argv) {
     Options defaultOptions = {
         .outputFile = "",
         .numberOfTests = 0,
-        .highestLength = 0,
+        .endingLength = 1,
+        .endingLength = 0,
         .isSingleSort = 0
     };
     
@@ -49,12 +50,19 @@ Options parseArguments(int argc, char** argv) {
             i++;
             defaultOptions.numberOfTests = atoi(argv[i]);
         }
-        else if (strcmp(currentArgument, "-n") == 0 || strcmp(currentArgument, "--number") == 0) {
+        else if (strcmp(currentArgument, "-b") == 0 || strcmp(currentArgument, "--beginning-length") == 0) {
             if (i == (argc - 1) || argv[i + 1][0] == '-') {
                 printUsage();
             }
             i++;
-            defaultOptions.highestLength = atoi(argv[i]);
+            defaultOptions.beginningLength = atoi(argv[i]);
+        }
+        else if (strcmp(currentArgument, "-n") == 0 || strcmp(currentArgument, "--number") == 0 || strcmp(currentArgument, "-e") == 0 || strcmp(currentArgument, "--ending-length") == 0) {
+            if (i == (argc - 1) || argv[i + 1][0] == '-') {
+                printUsage();
+            }
+            i++;
+            defaultOptions.endingLength = atoi(argv[i]);
         }
         else if (strcmp(currentArgument, "-s") == 0 || strcmp(currentArgument, "--single") == 0) {
             if (defaultOptions.numberOfTests) {
