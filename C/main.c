@@ -29,7 +29,7 @@ Options parseArguments(int argc, char** argv) {
     Options defaultOptions = {
         .outputFile = "",
         .numberOfTests = 0,
-        .endingLength = 1,
+        .beginningLength = 1,
         .endingLength = 0,
         .isSingleSort = 0
     };
