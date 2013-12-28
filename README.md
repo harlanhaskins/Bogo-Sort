@@ -24,7 +24,7 @@ BogoSort will generate a list of the length you specify and sort it. Intelligent
 Sample Output
 ======
     
-    How many items would you like in your list? 13
+    ./BogoSort -s -n 13
     [27, 21, 35, 9, 12, 3, 6, 23, 25, 32, 35, 36, 37]
     [3, 6, 9, 12, 21, 23, 25, 27, 32, 35, 35, 36, 37]
     It took me 00:37:35.218139 to BogoSort this list.
