@@ -48,21 +48,21 @@ Options parseArguments(int argc, char** argv) {
                 printUsage();
             }
             i++;
-            defaultOptions.numberOfTests = atoi(argv[i]);
+            defaultOptions.numberOfTests = strtoul(argv[i], NULL, 10);
         }
         else if (strcmp(currentArgument, "-b") == 0 || strcmp(currentArgument, "--beginning-length") == 0) {
             if (i == (argc - 1) || argv[i + 1][0] == '-') {
                 printUsage();
             }
             i++;
-            defaultOptions.beginningLength = atoi(argv[i]);
+            defaultOptions.beginningLength = strtoul(argv[i], NULL, 10);
         }
         else if (strcmp(currentArgument, "-n") == 0 || strcmp(currentArgument, "--number") == 0 || strcmp(currentArgument, "-e") == 0 || strcmp(currentArgument, "--ending-length") == 0) {
             if (i == (argc - 1) || argv[i + 1][0] == '-') {
                 printUsage();
             }
             i++;
-            defaultOptions.endingLength = atoi(argv[i]);
+            defaultOptions.endingLength = strtoul(argv[i], NULL, 10);
         }
         else if (strcmp(currentArgument, "-s") == 0 || strcmp(currentArgument, "--single") == 0) {
             if (defaultOptions.numberOfTests) {

@@ -2,13 +2,14 @@
 #include "BogoSort.h"
 
 void swap(int *array, int firstIndex, int secondIndex, size_t length) {
-    
-    int largestIndex = (int)(length - 1);
+
+    int largestIndex = (length - 1);
     if (firstIndex > largestIndex || secondIndex > largestIndex) {
-        printf("Error - Invalid Random Index: %d or %d is greater than %d\n", firstIndex, secondIndex, largestIndex);
+        printf("Error - Invalid Random Index: %d or %d is greater than %d\n",
+                firstIndex, secondIndex, largestIndex);
         exit(EXIT_FAILURE);
     }
-    
+
     // Create a temp variable to store the first index, because we'll
     // be overwriting it.
     int firstNumber = array[firstIndex];
@@ -25,7 +26,7 @@ unsigned int isSorted(int* array, size_t length) {
     // Iterate through the array.
     for (size_t i = 1; i < length; i++) {
         // If at any point the previous array item is greater than (or
-        // less than, in the case of descending arrays, return false. 
+        // less than, in the case of descending arrays, return false.
         if (array[i - 1] > array[i]) {
             return 0;
         }
@@ -34,22 +35,22 @@ unsigned int isSorted(int* array, size_t length) {
     return 1;
 }
 
-int randomIntegerInRange(size_t min, size_t max)
+int randomIntegerInRange(int min, int max)
 {
     double scaled = (double)rand( )/ RAND_MAX;
-    
+
     int random = (max - min + 1) * scaled + min;
-    
-    if ((size_t)random > max) {
+
+    if (random > max) {
         printf("Error: Random number too high.\n");
         abort();
     }
-    
+
     return random;
 }
 
 void shuffleArray(int* array, size_t length) {
-    
+
     // Declare and initialize the two indices that will be used to swap.
     int firstIndex = 0;
     int secondIndex = 0;
@@ -60,8 +61,8 @@ void shuffleArray(int* array, size_t length) {
             /* There's only one possibility for an array of two objects,
                and sometimes (becasue of modulo bias) it will constantly
                switch the same index.
-              
-               Doing this means we will do the only possibility for a 
+
+               Doing this means we will do the only possibility for a
                two item array.
             */
             swap(array, 0, 1, length);
@@ -70,7 +71,7 @@ void shuffleArray(int* array, size_t length) {
         // Reset the first index to some random number.
         firstIndex = randomIntegerInRange(0, (length - 1));
         secondIndex = randomIntegerInRange(0, (length - 1));
-        
+
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex, length);
     }
@@ -111,7 +112,7 @@ void* cautiousMalloc(size_t size) {
 
 int* randomArrayOfLength(size_t length) {
     // Allocate an array of the length specified.
-    int *array = (int*)cautiousMalloc((int)length * sizeof(int));
+    int *array = cautiousMalloc((int)length * sizeof(int));
 
     // Iterate (length) times.
     for (size_t i = 0; i < length; i++) {
@@ -134,7 +135,7 @@ long long unsigned int bogoSort(int* array, size_t length) {
 
         // Shuffle the array.
         shuffleArray(array, length);
-        
+
         // Optionally print the array each time.
         // printArray(array, length);
 
@@ -152,21 +153,21 @@ char* formattedTimeFromDouble(double time) {
     // minutes, etc.
 #define SECONDS_PER_MINUTE 60
 #define SECONDS_PER_HOUR (SECONDS_PER_MINUTE * 60)
-    
+
     // Get the number of hours in the elapsed time by dividing by
     // SECONDS_PER_HOUR and rounding down.
     int hours = (time / SECONDS_PER_HOUR);
-    
+
     // Subtract the number of hours (in seconds) from the timestamp.
     time -= (hours * SECONDS_PER_HOUR);
 
     // Get the number of minutes in the elapsed time by dividing by
     // SECONDS_PER_MINUTE and rounding down.
     int minutes = (time / SECONDS_PER_MINUTE);
-    
+
     // Subtract the number of minutes (in seconds) from the timestamp.
     time -= (minutes * SECONDS_PER_MINUTE);
-    
+
     // Allocate 17 char spaces (00:00:00.000000), which is 16, plus a null
     // terminator.
     char* timeString = cautiousMalloc(17);
@@ -185,50 +186,50 @@ void runBogoSort(int numberOfItemsInList) {
     srand((unsigned int)time(NULL));
 
     // Grab an array of random items.
-    int* array = randomArrayOfLength(numberOfItemsInList); 
-        
+    int* array = randomArrayOfLength(numberOfItemsInList);
+
     // Print that array.
     printArray(array, numberOfItemsInList);
 
     // Grab the clock right before iterating.
     clock_t start = clock();
-    
-    // Grab the numberOfIterations returned by BogoSorting the 
+
+    // Grab the numberOfIterations returned by BogoSorting the
     // array.
     long long unsigned int numberOfIterations = bogoSort(array,
                                                          numberOfItemsInList
                                                          );
-    
+
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();
-    
+
     // Print the array again, once we're done.
     printArray(array, numberOfItemsInList);
-    
+
     // Grab the elapsed time by casting the difference of the
-    // two CPU clocks to a double and dividing by CLOCKS_PER_SEC, 
+    // two CPU clocks to a double and dividing by CLOCKS_PER_SEC,
     // a macro in time.h.
     double elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-    
+
     // Grab the formatted time from that elapsed time using the
     // formattedTime method.
     char* timeString = formattedTimeFromDouble(elapsed);
-    
+
     // Print the time it took for the sort. Use that timeString we made
     // earlier.
     printf("It took me %s to BogoSort this list.\n", timeString);
-    
+
     // Set the locale to LC_NUMERIC so we can use the ' flag in our format.
     setlocale(LC_NUMERIC, "");
 
     // Create a string that says 'times' or 'time' depending whether or not there
     // was only one iteration.
     char* numberOfTimesString = numberOfIterations == 1 ? "time" : "times";
-    
+
     // Print the number of times, formatted with thousands separators
     // (thanks, locale.h.)
     printf("I shuffled it %'llu %s.\n", numberOfIterations, numberOfTimesString);
-    
+
     // Free the timeString.
     free(timeString);
 
