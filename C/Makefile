@@ -4,6 +4,7 @@ EXENAME=BogoSort
 CFILES=main.c BogoSortAnalysis.c BogoSort.c
 COUTPUT=BogoSortResults/
 COBJFILES=$(CFILES:c=o)
+CASSEMBLYFILES=$(CFILES:c=s)
 EXECUTABLES=$(EXENAME)
 
 all: $(EXENAME)
@@ -15,6 +16,7 @@ install:
 
 clean:
 	rm -rf $(COBJFILES)
+	rm -rf $(CASSEMBLYFILES)
 
 realclean purge: clean
 	rm -rf $(EXECUTABLES)
