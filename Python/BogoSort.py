@@ -92,3 +92,15 @@ def runBogoSort():
     
     # Print the number of iterations.
     print("I shuffled it " + formattedIterations + " " + timeString + ".")
+
+    # If the list was not sorted from the beginning.
+    if totalIterations > 0:
+
+        # Calculate the speed.
+        speed = totalIterations / elapsedTime.total_seconds()
+
+        # Format it to have only two fractional digits.
+        formattedSpeed = '{:.2f}'.format(speed)
+
+        # Print the speed.
+        print("I checked " + formattedSpeed + " permutations per second.")
