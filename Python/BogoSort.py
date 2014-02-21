@@ -1,16 +1,6 @@
 import random
 import datetime
 
-def swap(lst, i, j):
-    # Use Python tuble-swap to swap two list elements.
-    lst[i] , lst[j] = lst[j] , lst[i]
-
-def randomize(lst):
-    # Iterate through the list and swap the item at the current index
-    # with a random index
-    for index in range(len(lst)):
-        swap(lst, index, random.randint(0, len(lst) - 1))
-
 def bogoSort(lst):
     # Initialize a totalIterations variable.
     totalIterations = 0
@@ -18,7 +8,7 @@ def bogoSort(lst):
     # Run the commands below while the list isn't sorted.
     while (not isSorted(lst)):
         # Shuffle the list.
-        randomize(lst)
+        random.shuffle(lst)
 
         # Add to total iterations.
         totalIterations += 1
@@ -92,3 +82,15 @@ def runBogoSort():
     
     # Print the number of iterations.
     print("I shuffled it " + formattedIterations + " " + timeString + ".")
+
+    # If the list was not sorted from the beginning.
+    if totalIterations > 0:
+
+        # Calculate the speed.
+        speed = totalIterations / elapsedTime.total_seconds()
+
+        # Format it to have only two fractional digits.
+        formattedSpeed = '{:.2f}'.format(speed)
+
+        # Print the speed.
+        print("I checked " + formattedSpeed + " permutations per second.")
