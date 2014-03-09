@@ -25,7 +25,7 @@ void printUsage() {
 }
 
 Options parseArguments(int argc, char** argv) {
-    
+
     Options defaultOptions = {
         .outputFile = "",
         .numberOfTests = 0,
@@ -33,7 +33,7 @@ Options parseArguments(int argc, char** argv) {
         .endingLength = 0,
         .isSingleSort = 0
     };
-    
+
     for (int i = 1; i < argc; i++) {
         char* currentArgument = argv[i];
         if (strcmp(currentArgument, "-o") == 0 || strcmp(currentArgument, "--output-file") == 0) {

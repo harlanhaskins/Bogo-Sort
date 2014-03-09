@@ -4,5 +4,5 @@ BogoSort
 .DS_Store
 *.o
 *.csv
-BogoSortResults/
-__pychache__/
+BogoSortResults
+__pychache__

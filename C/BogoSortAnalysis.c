@@ -1,50 +1,63 @@
 #include "BogoSortAnalysis.h"
 
-void analyzeBogoSort(Options options) {
-
+char* currentTimeString() {
     time_t rawtime;
-    struct tm * timeinfo;
-    char timeBuffer[80];
+    struct tm *timeinfo;
 
-    time ( &rawtime );
+    const size_t BUFFER_SIZE = 80;
 
-    timeinfo = localtime ( &rawtime );
+    char *timeBuffer = cautiousMalloc(BUFFER_SIZE * sizeof(char));
 
-    strftime (timeBuffer, 80, "%Y%m%dT%I%M%S%p", timeinfo);
+    time(&rawtime);
 
-    char* outputDir = outputDirectory();
+    timeinfo = localtime(&rawtime);
 
+    strftime(timeBuffer, BUFFER_SIZE, "%Y%m%dT%I%M%S%p", timeinfo);
+
+    return timeBuffer;
+}
+
+FILE* cautiousOpen(char* buffer) {
+    FILE* outputFile = fopen(buffer, "w");
+    if (outputFile == NULL) {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+    return outputFile;
+}
+
+FILE* fileFromOptions(Options *options) {
     char buffer[256];
-    if (!strcmp(options.outputFile, "")) {
-        /*
-         * size_t len = strlen(outputDir) + (do math for max numb of chars in options.numberOfTests) + highestLength same math + strlen(timeBuffer) + 1;
-         * char str[len];
-         */
+    char *outputDir = outputDirectory();
 
-        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options.numberOfTests, options.endingLength, timeBuffer);
-        options.outputFile = buffer;
+    if (!strcmp(options->outputFile, "")) {
+        char *timeString = currentTimeString();
+        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options->numberOfTests, options->endingLength, timeString);
+        free(timeString);
     }
     else {
-        sprintf(buffer, "%s/%s", outputDir, options.outputFile);
-        options.outputFile = buffer;
+        sprintf(buffer, "%s/%s", outputDir, options->outputFile);
     }
+    options->outputFile = buffer;
 
-    FILE* outputFile = fopen(buffer, "w");
+    return cautiousOpen(buffer);
+}
 
-    if (outputFile == NULL) return;
-
+void runAnalysis(Options options, FILE *outputFile) {
     fprintf(outputFile, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
-
-    srand((unsigned int)time(NULL));
-
     for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.endingLength; length++) {
         for (int trial = 1; trial <= options.numberOfTests; trial++) {
 
             int* array = randomArrayOfLength(length);
 
+            printArray(array, length);
+
             clock_t start = clock();
             long long unsigned int iterations = bogoSort(array, length);
             clock_t end = clock();
+
+            printArray(array, length);
+            putc('\n', stdout);
 
             double elapsedTime = ((double)(end - start) / CLOCKS_PER_SEC);
 
@@ -53,10 +66,14 @@ void analyzeBogoSort(Options options) {
             free(array);
         }
     }
+    //printf("\nYour results are available in %s\n", options.outputFile);
 
     fclose(outputFile);
+}
 
-    printf("\nYour results are available in %s\n", options.outputFile);
+void analyzeBogoSort(Options options) {
+    FILE *outputFile = fileFromOptions(&options);
+    runAnalysis(options, outputFile);
 }
 
 char* outputDirectory() {
