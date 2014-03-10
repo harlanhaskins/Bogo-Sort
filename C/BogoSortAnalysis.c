@@ -66,7 +66,7 @@ void runAnalysis(Options options, FILE *outputFile) {
             free(array);
         }
     }
-    printf("\nYour results are available in %s\n", options.outputFile);
+    printf("Your results are available in %s\n", options.outputFile);
     free(options.outputFile);
     fclose(outputFile);
 }
