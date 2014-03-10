@@ -27,7 +27,7 @@ FILE* cautiousOpen(char* buffer) {
 }
 
 FILE* fileFromOptions(Options *options) {
-    char buffer[256];
+    char *buffer = malloc(256 * sizeof(char));
     char *outputDir = outputDirectory();
 
     if (!strcmp(options->outputFile, "")) {
@@ -66,8 +66,8 @@ void runAnalysis(Options options, FILE *outputFile) {
             free(array);
         }
     }
-    //printf("\nYour results are available in %s\n", options.outputFile);
-
+    printf("\nYour results are available in %s\n", options.outputFile);
+    free(options.outputFile);
     fclose(outputFile);
 }
 
