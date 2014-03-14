@@ -24,7 +24,7 @@ typedef struct Options {
 
 } Options;
 
-void analyzeBogoSort(Options options);
-char* outputDirectory();
+extern void analyzeBogoSort(Options options);
+extern char* outputDirectory();
 
 #endif

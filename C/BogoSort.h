@@ -16,26 +16,26 @@
 // For setLocale() and the ' format flag.
 #include <locale.h>
 
-int* randomArrayOfLength(size_t length);
+extern int* randomArrayOfLength(size_t length);
 
-void printArray(int* array, size_t length);
+extern void printArray(int* array, size_t length);
 
-void printArrayToFile(int* array, size_t length, FILE* outputfile);
+extern void printArrayToFile(int* array, size_t length, FILE* outputfile);
 
-void swap(int* array, int firstIndex, int secondIndex, size_t length);
+extern void swap(int* array, int firstIndex, int secondIndex, size_t length);
 
-unsigned int isSorted(int* array, size_t length);
+extern unsigned int isSorted(int* array, size_t length);
 
-void shuffleArray(int* array, size_t length);
+extern void shuffleArray(int* array, size_t length);
 
-long long unsigned int bogoSort(int* array, size_t length);
+extern long long unsigned int bogoSort(int* array, size_t length);
 
-char* formattedTimeFromDouble(double elapsedTime);
+extern char* formattedTimeFromDouble(double elapsedTime);
 
-int randonImtegerInRange(size_t min, size_t max);
+extern int randonImtegerInRange(size_t min, size_t max);
 
-void runBogoSort(int numberOfItemsInList);
+extern void runBogoSort(int numberOfItemsInList);
 
-void* cautiousMalloc(size_t size);
+extern void* cautiousMalloc(size_t size);
 
 #endif

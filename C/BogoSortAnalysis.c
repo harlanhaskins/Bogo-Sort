@@ -1,6 +1,6 @@
 #include "BogoSortAnalysis.h"
 
-char* currentTimeString() {
+static char* currentTimeString() {
     time_t rawtime;
     struct tm *timeinfo;
 
@@ -17,7 +17,7 @@ char* currentTimeString() {
     return timeBuffer;
 }
 
-FILE* cautiousOpen(char* buffer) {
+static FILE* cautiousOpen(char* buffer) {
     FILE* outputFile = fopen(buffer, "w");
     if (outputFile == NULL) {
         perror("fopen");
@@ -26,7 +26,7 @@ FILE* cautiousOpen(char* buffer) {
     return outputFile;
 }
 
-FILE* fileFromOptions(Options *options) {
+static FILE* fileFromOptions(Options *options) {
     char *buffer = malloc(256 * sizeof(char));
     char *outputDir = outputDirectory();
 
@@ -43,7 +43,7 @@ FILE* fileFromOptions(Options *options) {
     return cautiousOpen(buffer);
 }
 
-void runAnalysis(Options options, FILE *outputFile) {
+static void runAnalysis(Options options, FILE *outputFile) {
     fprintf(outputFile, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
     for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.endingLength; length++) {
         for (int trial = 1; trial <= options.numberOfTests; trial++) {
