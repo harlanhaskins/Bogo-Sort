@@ -101,6 +101,7 @@ void printArray(int* array, size_t length) {
     printArrayToFile(array, length, stdout);
 }
 
+// You'll need to free this when it's returned.
 void* cautiousMalloc(size_t size) {
     void* thing = malloc(size);
     if (!thing) {
@@ -110,6 +111,7 @@ void* cautiousMalloc(size_t size) {
     return thing;
 }
 
+// You'll need to free this when it's returned.
 int* randomArrayOfLength(size_t length) {
     // Allocate an array of the length specified.
     int *array = cautiousMalloc((int)length * sizeof(int));
@@ -148,6 +150,7 @@ long long unsigned int bogoSort(int* array, size_t length) {
     return iteration;
 }
 
+// You'll need to free this when it's returned.
 char* formattedTimeFromDouble(double time) {
     // Set some constants to use to calculate the number of hours,
     // minutes, etc.
@@ -186,7 +189,7 @@ void runBogoSort(int numberOfItemsInList) {
     srand((unsigned int)time(NULL));
 
     // Grab an array of random items.
-    int* array = randomArrayOfLength(numberOfItemsInList);
+    int *array = randomArrayOfLength(numberOfItemsInList);
 
     // Print that array.
     printArray(array, numberOfItemsInList);
@@ -197,8 +200,7 @@ void runBogoSort(int numberOfItemsInList) {
     // Grab the numberOfIterations returned by BogoSorting the
     // array.
     long long unsigned int numberOfIterations = bogoSort(array,
-                                                         numberOfItemsInList
-                                                         );
+                                                         numberOfItemsInList);
 
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();
