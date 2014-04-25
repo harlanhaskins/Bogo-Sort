@@ -3,7 +3,7 @@
 
 void swap(int *array, int firstIndex, int secondIndex, size_t length) {
 
-    int largestIndex = (length - 1);
+    int largestIndex = (int)(length - 1);
     if (firstIndex > largestIndex || secondIndex > largestIndex) {
         printf("Error - Invalid Random Index: %d or %d is greater than %d\n",
                 firstIndex, secondIndex, largestIndex);
@@ -69,8 +69,8 @@ void shuffleArray(int* array, size_t length) {
             return;
         }
         // Reset the first index to some random number.
-        firstIndex = randomIntegerInRange(0, (length - 1));
-        secondIndex = randomIntegerInRange(0, (length - 1));
+        firstIndex = randomIntegerInRange(0, (int)(length - 1));
+        secondIndex = randomIntegerInRange(0, (int)(length - 1));
 
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex, length);
@@ -101,6 +101,7 @@ void printArray(int* array, size_t length) {
     printArrayToFile(array, length, stdout);
 }
 
+// You'll need to free this when it's returned.
 void* cautiousMalloc(size_t size) {
     void* thing = malloc(size);
     if (!thing) {
@@ -110,6 +111,7 @@ void* cautiousMalloc(size_t size) {
     return thing;
 }
 
+// You'll need to free this when it's returned.
 int* randomArrayOfLength(size_t length) {
     // Allocate an array of the length specified.
     int *array = cautiousMalloc((int)length * sizeof(int));
@@ -117,14 +119,14 @@ int* randomArrayOfLength(size_t length) {
     // Iterate (length) times.
     for (size_t i = 0; i < length; i++) {
         // Add a random number from 0 to (length * 10).
-        array[i] = randomIntegerInRange(0, length * 10);
+        array[i] = randomIntegerInRange(0, (int)(length * 10));
     }
 
     // Return the random array.
     return array;
 }
 
-long long unsigned int bogoSort(int* array, size_t length) {
+long long unsigned int bogoSort(int* array, size_t length, int verbose) {
     // Initialize a number of iterations.
     long long unsigned int iteration = 0;
 
@@ -137,7 +139,9 @@ long long unsigned int bogoSort(int* array, size_t length) {
         shuffleArray(array, length);
 
         // Optionally print the array each time.
-        // printArray(array, length);
+        if (verbose) {
+            printArray(array, length);
+        }
 
         // Add to the iteration counter.
         iteration++;
@@ -148,6 +152,7 @@ long long unsigned int bogoSort(int* array, size_t length) {
     return iteration;
 }
 
+// You'll need to free this when it's returned.
 char* formattedTimeFromDouble(double time) {
     // Set some constants to use to calculate the number of hours,
     // minutes, etc.
@@ -181,12 +186,12 @@ char* formattedTimeFromDouble(double time) {
     return timeString;
 }
 
-void runBogoSort(int numberOfItemsInList) {
+void runBogoSort(int numberOfItemsInList, int verbose) {
     // Set the seed of the random number generator.
     srand((unsigned int)time(NULL));
 
     // Grab an array of random items.
-    int* array = randomArrayOfLength(numberOfItemsInList);
+    int *array = randomArrayOfLength(numberOfItemsInList);
 
     // Print that array.
     printArray(array, numberOfItemsInList);
@@ -197,8 +202,8 @@ void runBogoSort(int numberOfItemsInList) {
     // Grab the numberOfIterations returned by BogoSorting the
     // array.
     long long unsigned int numberOfIterations = bogoSort(array,
-                                                         numberOfItemsInList
-                                                         );
+                                                         numberOfItemsInList,
+                                                         verbose);
 
     // Once we've done that, grab the clock at the end.
     clock_t end = clock();

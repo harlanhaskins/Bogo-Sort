@@ -32,7 +32,7 @@ static FILE* fileFromOptions(Options *options) {
 
     if (!strcmp(options->outputFile, "")) {
         char *timeString = currentTimeString();
-        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options->numberOfTests, options->endingLength, timeString);
+        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options->trials, options->size, timeString);
         free(timeString);
     }
     else {
@@ -45,15 +45,15 @@ static FILE* fileFromOptions(Options *options) {
 
 static void runAnalysis(Options options, FILE *outputFile) {
     fprintf(outputFile, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
-    for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.endingLength; length++) {
-        for (int trial = 1; trial <= options.numberOfTests; trial++) {
+    for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.size; length++) {
+        for (int trial = 1; trial <= options.trials; trial++) {
 
             int* array = randomArrayOfLength(length);
 
             printArray(array, length);
 
             clock_t start = clock();
-            long long unsigned int iterations = bogoSort(array, length);
+            long long unsigned int iterations = bogoSort(array, length, options.verbose);
             clock_t end = clock();
 
             printArray(array, length);

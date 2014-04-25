@@ -28,13 +28,13 @@ extern unsigned int isSorted(int* array, size_t length);
 
 extern void shuffleArray(int* array, size_t length);
 
-extern long long unsigned int bogoSort(int* array, size_t length);
+extern long long unsigned int bogoSort(int* array, size_t length, int verbose);
 
 extern char* formattedTimeFromDouble(double elapsedTime);
 
 extern int randonImtegerInRange(size_t min, size_t max);
 
-extern void runBogoSort(int numberOfItemsInList);
+extern void runBogoSort(int numberOfItemsInList, int verbose);
 
 extern void* cautiousMalloc(size_t size);
 
