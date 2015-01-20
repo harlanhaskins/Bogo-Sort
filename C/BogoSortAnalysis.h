@@ -6,25 +6,13 @@
 //  Copyright (c) 2013 haskins. All rights reserved.
 //
 
-#include "BogoSort.h"
-#include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <errno.h>
+#include "main.h"
+#include "BSArray.h"
 
-#ifndef BogoSort_BogoSortAnalysis_h
-#define BogoSort_BogoSortAnalysis_h
+#ifndef BogoSortAnalysis_h
+#define BogoSortAnalysis_h
 
-typedef struct Options {
-    char* outputFile;
-    int trials;
-    int beginningLength;
-    int size;
-    int single;
-    int verbose;
-} Options;
-
-extern void analyzeBogoSort(Options options);
-extern char* outputDirectory();
+extern void analyze(Options options);
+extern char *output_directory();
 
 #endif

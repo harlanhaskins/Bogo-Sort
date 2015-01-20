@@ -9,24 +9,18 @@
 #include <string.h>
 #include <limits.h>
 #include <getopt.h>
-
-#if __has_extension(blocks)
-#include <Block.h>
-#endif
-
 #include "BogoSort.h"
 #include "BogoSortAnalysis.h"
 
-void runWithArguments(Options options) {
+void run_with_arguments(Options options) {
     if (options.single) {
-        runBogoSort(options.size, options.verbose);
-    }
-    else {
-        analyzeBogoSort(options);
+        run(options);
+    } else {
+        analyze(options);
     }
 }
 
-void printUsage() {
+void print_usage() {
     puts("Usage: BogoSort [-s | -t trials] [-b beginning-length] [-n number-of-items] [-o filename] [-v]\n");
     exit(1);
 }
@@ -35,12 +29,16 @@ static inline int clamp(unsigned long a) {
     return a < (unsigned long)INT_MAX ? (int)a : INT_MAX;
 }
 
-Options parseArguments(int argc, char** argv) {
+static inline int num_arg(char *arg) {
+    return clamp(strtoul(arg, NULL, 10));
+}
 
-    Options defaultOptions = {
-        .outputFile = "",
+Options parse_arguments(int argc, char **argv) {
+
+    Options default_options = {
+        .output_file = "",
         .trials = 0,
-        .beginningLength = 1,
+        .beginning_length = 1,
         .size = 0,
         .single = 0,
         .verbose = 0
@@ -55,46 +53,46 @@ Options parseArguments(int argc, char** argv) {
         {"verbose",          no_argument,       0, 'v'}
     };
 
-    int longIndex = 0;
+    int long_index = 0;
     int option = 0;
     do {
-        option = getopt_long(argc, argv, "vso:t:b:n:", long_options, &longIndex);
+        option = getopt_long(argc, argv, "vso:t:b:n:", long_options, &long_index);
         switch (option) {
             case 's':
-                defaultOptions.single = 1;
+                default_options.single = 1;
                 break;
             case 'v':
-                defaultOptions.verbose = 1;
+                default_options.verbose = 1;
                 break;
             case 'o':
-                defaultOptions.outputFile = optarg;
+                default_options.output_file = optarg;
                 break;
             case 't':
-                defaultOptions.trials = clamp(strtoul(optarg, NULL, 10));
+                default_options.trials = num_arg(optarg);
                 break;
             case 'b':
-                defaultOptions.beginningLength = clamp(strtoul(optarg, NULL, 10));
+                default_options.beginning_length = num_arg(optarg);
                 break;
             case 'n':
-                defaultOptions.size = clamp(strtoul(optarg, NULL, 10));
+                default_options.size = num_arg(optarg);
                 break;
             default:
                 break;
         }
     } while (option != -1);
 
-    if ((!defaultOptions.single && !defaultOptions.trials)  ||
-         (defaultOptions.single && defaultOptions.trials)   ||
-         (defaultOptions.size) == 0) {
-        printUsage();
+    if ((!default_options.single && !default_options.trials)  ||
+         (default_options.single && default_options.trials)   ||
+         (default_options.size) == 0) {
+        print_usage();
     }
 
-    return defaultOptions;
+    return default_options;
 }
 
-int main(int argc, char** argv) {
-    Options options = parseArguments(argc, argv);
-    runWithArguments(options);
-    return 0;
+int main(int argc, char **argv) {
+    Options options = parse_arguments(argc, argv);
+    run_with_arguments(options);
+    return EXIT_SUCCESS;
 }
 

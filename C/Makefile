@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-Wall -std=gnu99 -Wextra -pedantic -g
 EXENAME=BogoSort
-CFILES=main.c BogoSortAnalysis.c BogoSort.c
+CFILES=main.c BogoSortAnalysis.c BogoSort.c BSArray.c
 COUTPUT=BogoSortResults/
 COBJFILES=$(CFILES:c=o)
 CASSEMBLYFILES=$(CFILES:c=s)

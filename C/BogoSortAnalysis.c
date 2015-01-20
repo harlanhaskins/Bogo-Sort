@@ -1,83 +1,88 @@
 #include "BogoSortAnalysis.h"
+#include "BogoSort.h"
+#include <time.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
 
-static char* currentTimeString() {
+static char *current_time() {
     time_t rawtime;
     struct tm *timeinfo;
 
-    const size_t BUFFER_SIZE = 80;
+    const size_t buffer_size = 80;
 
-    char *timeBuffer = cautiousMalloc(BUFFER_SIZE * sizeof(char));
+    char *time_buffer = bs_malloc(buffer_size * sizeof(char));
 
     time(&rawtime);
 
     timeinfo = localtime(&rawtime);
 
-    strftime(timeBuffer, BUFFER_SIZE, "%Y%m%dT%I%M%S%p", timeinfo);
+    strftime(time_buffer, buffer_size, "%Y%m%dT%I%M%S%p", timeinfo);
 
-    return timeBuffer;
+    return time_buffer;
 }
 
-static FILE* cautiousOpen(char* buffer) {
-    FILE* outputFile = fopen(buffer, "w");
-    if (outputFile == NULL) {
+static FILE *bs_open(char *buffer) {
+    FILE *output_file = fopen(buffer, "w");
+    if (output_file == NULL) {
         perror("fopen");
         exit(EXIT_FAILURE);
     }
-    return outputFile;
+    return output_file;
 }
 
-static FILE* fileFromOptions(Options *options) {
+static FILE *file_from_options(Options *options) {
     char *buffer = malloc(256 * sizeof(char));
-    char *outputDir = outputDirectory();
+    char *output_dir = output_directory();
 
-    if (!strcmp(options->outputFile, "")) {
-        char *timeString = currentTimeString();
-        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", outputDir, options->trials, options->size, timeString);
+    if (!strcmp(options->output_file, "")) {
+        char *timeString = current_time();
+        sprintf(buffer, "%s/BogoSort_%d-trials_%d-items_%s.csv", output_dir, options->trials, options->size, timeString);
         free(timeString);
+    } else {
+        sprintf(buffer, "%s/%s", output_dir, options->output_file);
     }
-    else {
-        sprintf(buffer, "%s/%s", outputDir, options->outputFile);
-    }
-    options->outputFile = buffer;
+    options->output_file = buffer;
 
-    return cautiousOpen(buffer);
+    return bs_open(buffer);
 }
 
-static void runAnalysis(Options options, FILE *outputFile) {
-    fprintf(outputFile, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
-    for (size_t length = (size_t)options.beginningLength; length <= (size_t)options.size; length++) {
+static void run_analysis(Options options, FILE *output_file) {
+    fprintf(output_file, "Length,Trial,Elapsed Time,Number Of Shuffles\n");
+    for (size_t length = (size_t)options.beginning_length; length <= (size_t)options.size; length++) {
         for (int trial = 1; trial <= options.trials; trial++) {
 
-            int* array = randomArrayOfLength(length);
+            BSArray *array = bsarray_make_random(length);
 
-            printArray(array, length);
+            bsarray_print(array);
 
             clock_t start = clock();
-            long long unsigned int iterations = bogoSort(array, length, options.verbose);
+            long long unsigned int iterations = bsarray_bogosort(array, options.verbose);
             clock_t end = clock();
 
-            printArray(array, length);
+            bsarray_print(array);
             putc('\n', stdout);
 
-            double elapsedTime = ((double)(end - start) / CLOCKS_PER_SEC);
+            double elapsed_time = ((double)(end - start) / CLOCKS_PER_SEC);
 
-            fprintf(outputFile, "%zu,%d,%f,%llu\n", length, trial, elapsedTime, iterations);
+            fprintf(output_file, "%zu,%d,%f,%llu\n", length, trial, elapsed_time, iterations);
 
-            free(array);
+            bsarray_free(array);
         }
     }
-    printf("Your results are available in %s\n", options.outputFile);
-    free(options.outputFile);
-    fclose(outputFile);
+    printf("Your results are available in %s\n", options.output_file);
+    free(options.output_file);
+    fclose(output_file);
 }
 
-void analyzeBogoSort(Options options) {
-    FILE *outputFile = fileFromOptions(&options);
-    runAnalysis(options, outputFile);
+void analyze(Options options) {
+    FILE *output_file = file_from_options(&options);
+    run_analysis(options, output_file);
 }
 
-char* outputDirectory() {
-    char* directory = "./BogoSortResults";
+char *output_directory() {
+    char *directory = "./BogoSortResults";
     mkdir(directory, S_IRWXU);
     return directory;
 }
