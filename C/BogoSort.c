@@ -37,7 +37,7 @@ unsigned int isSorted(int* array, size_t length) {
 
 int randomIntegerInRange(int min, int max)
 {
-    double scaled = (double)rand( )/ RAND_MAX;
+    double scaled = (double)rand()/ RAND_MAX;
 
     int random = (max - min + 1) * scaled + min;
 
@@ -69,11 +69,12 @@ void shuffleArray(int* array, size_t length) {
             return;
         }
         // Reset the first index to some random number.
-        firstIndex = randomIntegerInRange(0, (length - 1));
-        secondIndex = randomIntegerInRange(0, (length - 1));
+        secondIndex = (length - 1) - i;
+        firstIndex = randomIntegerInRange(0, secondIndex);
 
         // Run the swap function with the two random indices.
         swap(array, firstIndex, secondIndex, length);
+        printArray(array, length);
     }
 }
 
@@ -150,12 +151,13 @@ long long unsigned int bogoSort(int* array, size_t length) {
     return iteration;
 }
 
+// Set some constants to use to calculate the number of hours,
+// minutes, etc.
+static const int SECONDS_PER_MINUTE = 60;
+static const int SECONDS_PER_HOUR   = SECONDS_PER_MINUTE * 60;
+
 // You'll need to free this when it's returned.
 char* formattedTimeFromDouble(double time) {
-    // Set some constants to use to calculate the number of hours,
-    // minutes, etc.
-#define SECONDS_PER_MINUTE 60
-#define SECONDS_PER_HOUR (SECONDS_PER_MINUTE * 60)
 
     // Get the number of hours in the elapsed time by dividing by
     // SECONDS_PER_HOUR and rounding down.

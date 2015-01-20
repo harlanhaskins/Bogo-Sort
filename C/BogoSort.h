@@ -32,7 +32,7 @@ extern long long unsigned int bogoSort(int* array, size_t length);
 
 extern char* formattedTimeFromDouble(double elapsedTime);
 
-extern int randonImtegerInRange(size_t min, size_t max);
+extern int randonIntegerInRange(size_t min, size_t max);
 
 extern void runBogoSort(int numberOfItemsInList);
 
