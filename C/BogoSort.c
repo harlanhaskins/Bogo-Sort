@@ -1,7 +1,5 @@
 // Include the header.
 #include "BogoSort.h"
-#include "BSArray.h"
-#include "main.h"
 #include <time.h>
 #include <locale.h>
 

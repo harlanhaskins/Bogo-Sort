@@ -25,8 +25,6 @@ extern void bsarray_print(BSArray *array);
 
 extern void bsarray_print_f(BSArray *array, FILE *outputfile);
 
-extern void bsarray_print();
-
 extern void bsarray_swap(BSArray *array, int first_index, int second_index);
 
 extern unsigned int bsarray_is_sorted(BSArray *array);

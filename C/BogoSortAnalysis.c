@@ -1,10 +1,7 @@
 #include "BogoSortAnalysis.h"
-#include "BogoSort.h"
 #include <time.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <unistd.h>
-#include <errno.h>
 
 static char *current_time() {
     time_t rawtime;

@@ -112,4 +112,3 @@ long long unsigned bsarray_bogosort(BSArray *array, int verbose) {
     }
     return iteration;
 }
-
