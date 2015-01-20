@@ -7,12 +7,19 @@
 //
 
 #include <string.h>
+#include <limits.h>
+#include <getopt.h>
+
+#if __has_extension(blocks)
+#include <Block.h>
+#endif
+
 #include "BogoSort.h"
 #include "BogoSortAnalysis.h"
 
 void runWithArguments(Options options) {
-    if (options.isSingleSort) {
-        runBogoSort(options.endingLength);
+    if (options.single) {
+        runBogoSort(options.size, options.verbose);
     }
     else {
         analyzeBogoSort(options);
@@ -20,63 +27,68 @@ void runWithArguments(Options options) {
 }
 
 void printUsage() {
-    puts("Usage: BogoSort [-s | -t numberOfTests] [-b beginningLength] [-e endingLength | -n numberOfItems] [-o filename]\n");
-    abort();
+    puts("Usage: BogoSort [-s | -t trials] [-b beginning-length] [-n number-of-items] [-o filename] [-v]\n");
+    exit(1);
+}
+
+static inline int clamp(unsigned long a) {
+    return a < (unsigned long)INT_MAX ? (int)a : INT_MAX;
 }
 
 Options parseArguments(int argc, char** argv) {
 
     Options defaultOptions = {
         .outputFile = "",
-        .numberOfTests = 0,
+        .trials = 0,
         .beginningLength = 1,
-        .endingLength = 0,
-        .isSingleSort = 0
+        .size = 0,
+        .single = 0,
+        .verbose = 0
     };
 
-    for (int i = 1; i < argc; i++) {
-        char* currentArgument = argv[i];
-        if (strcmp(currentArgument, "-o") == 0 || strcmp(currentArgument, "--output-file") == 0) {
-            if (i == (argc - 1) || argv[i + 1][0] == '-') {
-                printUsage();
-            }
-            i++;
-            defaultOptions.outputFile = argv[i];
+    static struct option long_options[] = {
+        {"output-file",      required_argument, 0, 'o'},
+        {"trials",           required_argument, 0, 't'},
+        {"beginning-length", required_argument, 0, 'b'},
+        {"number-of-items",  required_argument, 0, 'n'},
+        {"single",           no_argument,       0, 's'},
+        {"verbose",          no_argument,       0, 'v'}
+    };
+
+    int longIndex = 0;
+    int option = 0;
+    do {
+        option = getopt_long(argc, argv, "vso:t:b:n:", long_options, &longIndex);
+        switch (option) {
+            case 's':
+                defaultOptions.single = 1;
+                break;
+            case 'v':
+                defaultOptions.verbose = 1;
+                break;
+            case 'o':
+                defaultOptions.outputFile = optarg;
+                break;
+            case 't':
+                defaultOptions.trials = clamp(strtoul(optarg, NULL, 10));
+                break;
+            case 'b':
+                defaultOptions.beginningLength = clamp(strtoul(optarg, NULL, 10));
+                break;
+            case 'n':
+                defaultOptions.size = clamp(strtoul(optarg, NULL, 10));
+                break;
+            default:
+                break;
         }
-        else if (strcmp(currentArgument, "-t") == 0 || strcmp(currentArgument, "--trials") == 0) {
-            if (i == (argc - 1) || argv[i + 1][0] == '-' || defaultOptions.isSingleSort) {
-                printUsage();
-            }
-            i++;
-            defaultOptions.numberOfTests = strtoul(argv[i], NULL, 10);
-        }
-        else if (strcmp(currentArgument, "-b") == 0 || strcmp(currentArgument, "--beginning-length") == 0) {
-            if (i == (argc - 1) || argv[i + 1][0] == '-') {
-                printUsage();
-            }
-            i++;
-            defaultOptions.beginningLength = strtoul(argv[i], NULL, 10);
-        }
-        else if (strcmp(currentArgument, "-n") == 0 || strcmp(currentArgument, "--number") == 0 || strcmp(currentArgument, "-e") == 0 || strcmp(currentArgument, "--ending-length") == 0) {
-            if (i == (argc - 1) || argv[i + 1][0] == '-') {
-                printUsage();
-            }
-            i++;
-            defaultOptions.endingLength = strtoul(argv[i], NULL, 10);
-        }
-        else if (strcmp(currentArgument, "-s") == 0 || strcmp(currentArgument, "--single") == 0) {
-            if (defaultOptions.numberOfTests) {
-                printUsage();
-            }
-            defaultOptions.isSingleSort = 1;
-        }
-        else {
-            printUsage();
-        }
-    }
-    if (!defaultOptions.isSingleSort && !defaultOptions.numberOfTests) {
+    } while (option != -1);
+
+    if ((!defaultOptions.single && !defaultOptions.trials)  ||
+         (defaultOptions.single && defaultOptions.trials)   ||
+         (defaultOptions.size) == 0) {
         printUsage();
     }
+
     return defaultOptions;
 }
 

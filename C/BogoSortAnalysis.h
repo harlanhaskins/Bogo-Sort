@@ -17,11 +17,11 @@
 
 typedef struct Options {
     char* outputFile;
-    int numberOfTests;
+    int trials;
     int beginningLength;
-    int endingLength;
-    int isSingleSort;
-
+    int size;
+    int single;
+    int verbose;
 } Options;
 
 extern void analyzeBogoSort(Options options);
