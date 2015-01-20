@@ -1,96 +1,43 @@
 import random
 import datetime
 
-def bogoSort(lst):
-    # Initialize a totalIterations variable.
-    totalIterations = 0
 
-    # Run the commands below while the list isn't sorted.
-    while (not isSorted(lst)):
-        # Shuffle the list.
+def bogo_sort(lst):
+    count = 0
+    while not sorted(lst):
         random.shuffle(lst)
+        count += 1
+    return count
 
-        # Add to total iterations.
-        totalIterations += 1
 
-    # Return the total iterations.
-    return totalIterations
+def random_list(length):
+    return [random.randint(0, 10 * length) for _ in range(length)]
 
-def isSorted(lst):
-     # Iterate through the list.
-    for mark in range(len(lst) - 1):
 
-        # If at any point the current number is bigger than the one
-        # in front of it, return false. It's not sorted.
-        if lst[mark] > lst[mark + 1]:
-            return False
-
-    # If it iterated properly, return True.
-    return True
-
-def randomListWithNumberOfObjects(n):
-    # Create a blank list object.
-    lst = []
-
-    # Iterate to the number and add random integer (1 - 100)
-    for number in range(n):
-        lst.append(random.randint(0, 10 * n))
-
-    # Return that new list.
-    return lst
-
-def runBogoSort():
-    # Prompt the user for a number of items for the list.
-    number = input("How many items would you like in your list? ")
-
-    # Cast that to an int.
-    numberOfItems = int(number)
-
-    # Create a randomized list.
-    lst = randomListWithNumberOfObjects(numberOfItems)
-
-    # Print the list for comparison's sake.
+def run_bogo_sort(length):
+    lst = random_list(length)
     print(lst)
 
-    # Start the timer. Essentially create a reference to now.
-    ticks = datetime.datetime.now()
+    start = datetime.datetime.now()
+    iterations = bogo_sort(lst)
+    end = datetime.datetime.now()
 
-    # Run the bogoSort! Save the return value as the number of Iterations.
-    totalIterations = bogoSort(lst)
+    elapsed = end - start
+    return lst, iterations, elapsed
 
-    # Get the finished-sorting time.
-    endTicks = datetime.datetime.now()
 
-    # Compare that to the starting time to find an elapsed time.
-    elapsedTime = endTicks - ticks
-
-    # Print the sorted list.
+def print_results(lst, iterations, elapsed):
     print(lst)
-
-    # Print the elapsed time.
-    print("It took me " + str(elapsedTime) + " to BogoSort this list.")
-
-    # Create a string for the word 'time'.
-    timeString = 'time'
-
-    # Add an 's' to the end if the number of iterations is anything but 1.
-    if not (totalIterations == 1):
-        timeString += 's'
+    print("It took me " + str() + " to BogoSort this list.")
 
     # Add grouping separators to numbers using Python string formats.
-    formattedIterations = '{:,}'.format(totalIterations)
+    formatted_iterations = '{:,}'.format(iterations)
 
-    # Print the number of iterations.
-    print("I shuffled it " + formattedIterations + " " + timeString + ".")
+    time_string = 'time' if iterations == 1 else 'times'
 
-    # If the list was not sorted from the beginning.
-    if totalIterations > 0:
+    print("I shuffled it " + formatted_iterations + " " + time_string + ".")
 
-        # Calculate the speed.
-        speed = totalIterations / elapsedTime.total_seconds()
-
-        # Format it to have only two fractional digits.
-        formattedSpeed = '{:.2f}'.format(speed)
-
-        # Print the speed.
-        print("I checked " + formattedSpeed + " permutations per second.")
+    if iterations > 0:
+        speed = iterations / elapsed.total_seconds()
+        formatted_speed = '{:.2f}'.format(speed)
+        print("I checked " + formatted_speed + " permutations per second.")

@@ -1,5 +1,5 @@
-from BogoSort import *
-from BogoSortAnalysis import *
+from bogosort import *
+from bogosortanalysis import *
 
 def main():
     print("Welcome to BogoSort. Please enter the number of what you'd like to do.\n");
