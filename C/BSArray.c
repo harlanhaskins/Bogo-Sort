@@ -35,7 +35,7 @@ int _random_int_in_range(size_t min, size_t max) {
 void bsarray_shuffle(BSArray *array) {
     int swap_index = 0;
 
-    for (size_t i = array->length; i > 0; --i) {
+    for (size_t i = array->length - 1; i > 0; --i) {
         if (array->length == 2) {
             /* There's only one possibility for an array of two objects,
                and sometimes (becasue of modulo bias) it will constantly
@@ -49,7 +49,7 @@ void bsarray_shuffle(BSArray *array) {
         }
 
         swap_index = _random_int_in_range(0, i);
-        bsarray_swap(array, swap_index, i);
+        bsarray_swap(array, swap_index, (int)i);
     }
 }
 

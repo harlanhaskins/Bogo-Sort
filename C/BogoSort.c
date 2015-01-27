@@ -38,6 +38,8 @@ void run(Options options) {
     double elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
     char *time_string = _formatted_time(elapsed);
     printf("It took me %s to BogoSort this list.\n", time_string);
+    free(time_string);
+    
     // Set the locale to LC_NUMERIC so we can use the ' flag in our format.
     setlocale(LC_NUMERIC, "");
     char *times_string = iteration_count == 1 ? "time" : "times";
@@ -46,6 +48,5 @@ void run(Options options) {
     double shuffles_per_sec = iteration_count / elapsed;
     printf("That's %f shuffles per second.\n", shuffles_per_sec);
 
-    free(time_string);
     bsarray_free(array);
 }
