@@ -10,7 +10,7 @@ def create_path(path):
         if exception.errno != errno.EEXIST:
             raise
 
-def run_analysis(ending_length, number_of_trials):
+def run_analysis(beginning_length, ending_length, number_of_trials):
     
     directory = "./BogoSortResults"
     create_path(directory)

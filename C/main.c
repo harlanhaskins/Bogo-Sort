@@ -81,8 +81,7 @@ Options parse_arguments(int argc, char **argv) {
         }
     } while (option != -1);
 
-    if ((!default_options.single && !default_options.trials)  ||
-         (default_options.single && default_options.trials)   ||
+    if (!(default_options.single ^ default_options.trials) ||
          (default_options.size) == 0) {
         print_usage();
     }

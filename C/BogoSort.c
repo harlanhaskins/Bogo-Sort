@@ -46,7 +46,7 @@ void run(Options options) {
     printf("I shuffled it %'llu %s.\n", iteration_count, times_string);
 
     double shuffles_per_sec = iteration_count / elapsed;
-    printf("That's %f shuffles per second.\n", shuffles_per_sec);
+    printf("That's %.2f shuffles per second.\n", shuffles_per_sec);
 
     bsarray_free(array);
 }
