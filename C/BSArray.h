@@ -31,6 +31,7 @@ extern unsigned int bsarray_is_sorted(BSArray *array);
 
 extern void bsarray_shuffle(BSArray *array);
 
-extern long long unsigned int bsarray_bogosort(BSArray *array, int verbose);
+extern long long unsigned int bsarray_bogosort_v(BSArray *array, int verbose);
+extern long long unsigned int bsarray_bogosort(BSArray *array);
 
 #endif

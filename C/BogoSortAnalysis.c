@@ -55,7 +55,7 @@ static void run_analysis(Options options, FILE *output_file) {
             bsarray_print(array);
 
             clock_t start = clock();
-            long long unsigned int iterations = bsarray_bogosort(array, options.verbose);
+            long long unsigned int iterations = bsarray_bogosort_v(array, options.verbose);
             clock_t end = clock();
 
             bsarray_print(array);

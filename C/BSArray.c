@@ -33,10 +33,9 @@ int _random_int_in_range(size_t min, size_t max) {
 }
 
 void bsarray_shuffle(BSArray *array) {
-    int first = 0;
-    int second = 0;
+    int swap_index = 0;
 
-    for (size_t i = 0; i < array->length; i++) {
+    for (size_t i = array->length; i > 0; --i) {
         if (array->length == 2) {
             /* There's only one possibility for an array of two objects,
                and sometimes (becasue of modulo bias) it will constantly
@@ -49,10 +48,8 @@ void bsarray_shuffle(BSArray *array) {
             return;
         }
 
-        second = (int)(array->length - 1 - i);
-        first = _random_int_in_range(0, second);
-
-        bsarray_swap(array, first, second);
+        swap_index = _random_int_in_range(0, i);
+        bsarray_swap(array, swap_index, i);
     }
 }
 
@@ -98,7 +95,11 @@ void bsarray_free(BSArray *array) {
     free(array);
 }
 
-long long unsigned bsarray_bogosort(BSArray *array, int verbose) {
+long long unsigned bsarray_bogosort(BSArray *array) {
+    return bsarray_bogosort_v(array, 0);
+}
+
+long long unsigned bsarray_bogosort_v(BSArray *array, int verbose) {
     long long unsigned iteration = 0;
 
     // Run a loop while the array is not sorted. This is an O(n) operation

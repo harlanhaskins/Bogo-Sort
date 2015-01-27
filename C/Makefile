@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-Wall -std=gnu99 -Wextra -pedantic -g
+CFLAGS=-Wall -Ofast -std=gnu99 -Wextra -pedantic -g
 EXENAME=BogoSort
 CFILES=main.c BogoSortAnalysis.c BogoSort.c BSArray.c
 COUTPUT=BogoSortResults/

@@ -19,7 +19,7 @@ char *_formatted_time(double time) {
     char *time_string = bs_malloc(time_length);
 
     snprintf(time_string, time_length, "%02d:%02d:%f", hours, minutes, time);
-    
+
     return time_string;
 }
 
@@ -31,7 +31,7 @@ void run(Options options) {
 
     bsarray_print(array);
     clock_t start = clock();
-    long long unsigned int iteration_count = bsarray_bogosort(array, options.verbose);
+    long long unsigned int iteration_count = bsarray_bogosort_v(array, options.verbose);
     clock_t end = clock();
     bsarray_print(array);
 
@@ -42,6 +42,9 @@ void run(Options options) {
     setlocale(LC_NUMERIC, "");
     char *times_string = iteration_count == 1 ? "time" : "times";
     printf("I shuffled it %'llu %s.\n", iteration_count, times_string);
+
+    double shuffles_per_sec = iteration_count / elapsed;
+    printf("That's %f shuffles per second.\n", shuffles_per_sec);
 
     free(time_string);
     bsarray_free(array);
