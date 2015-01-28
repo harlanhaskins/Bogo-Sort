@@ -1,6 +1,8 @@
 import random
+import sys
 import datetime
 
+bs_range = xrange if sys.version_info[0] < 3 else range
 
 def bogo_sort(lst):
     count = 0
@@ -10,8 +12,8 @@ def bogo_sort(lst):
     return count
 
 def is_sorted(l):
-    for i, el in enumerate(l[1:]):
-        if el >= l[i-1]:
+    for i in bs_range(1, len(l)):
+        if l[i] < l[i - 1]:
             return False
     return True
 
